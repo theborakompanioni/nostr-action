@@ -3,11 +3,11 @@ name: nostr
 on:
   workflow_dispatch:
     inputs:
-      content:
-        description: content (e.g. hello world!)
+      key:
+        description: private key (e.g. 0123456789abcdef...)
         required: true
       relay:
-        description: relay
+        description: relay (e.g. wss://relayer.fiatjaf.com)
         type: choice
         options: 
         - wss://nostr-pub.wellorder.net
@@ -21,6 +21,9 @@ on:
         - wss://nostr-relay.freeberty.net
         - wss://nostr.bitcoiner.social
         - wss://nostr-relay.wlvs.space
+      content:
+        description: content (e.g. hello world!)
+        required: true
 
 jobs:
   units:
@@ -32,7 +35,8 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Publish event via nostr
-        uses: theborakompanioni/nostr@v1
+        uses: ./
         with:
+          key: ${{ github.event.inputs.key }}
           relay: ${{ github.event.inputs.relay }}
           content: ${{ github.event.inputs.content }}

@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint .",
-    "prepare": "ncc build index.js -o dist --source-map --license licenses.txt",
+    "prepare": "&& ncc build index.js -o dist --source-map --license licenses.txt",
     "test": "jest",
-    "all": "npm run lint && npm run prepare && npm run test"
+    "all": "npm run lint && npm run prepare && npm run test",
+    "nostr-tools-to-commonjs": "babel node_modules/nostr-tools/ --out-dir nostr-tools-commonjs"
   },
   "repository": {
     "type": "git",
@@ -28,7 +29,11 @@
     "@actions/core": "^1.2.5"
   },
   "devDependencies": {
+    "@babel/cli": "^7.16.8",
+    "@babel/core": "^7.16.12",
+    "@babel/preset-env": "^7.16.11",
     "@vercel/ncc": "^0.31.1",
+    "babel-jest": "^27.4.6",
     "eslint": "^8.0.0",
     "jest": "^27.2.5",
     "nostr-tools": "^0.21.4"

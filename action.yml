@@ -1,17 +1,20 @@
 name: 'Wait'
 description: 'Wait a designated number of milliseconds'
 inputs:
+  key:
+    description: 'nostr private key'
+    required: true
   relay:
     description: 'nostr relay'
     required: true
     default: 'wss://relayer.fiatjaf.com'
   content:
-    description: 'nostr relay'
+    description: 'nostr content'
     required: true
     
 outputs:
-  time: # output will be available to future steps
-    description: 'The current time after waiting'
+  eventHash:
+    description: 'The hash of the published event'
 runs:
   using: 'node12'
   main: 'dist/index.js'
