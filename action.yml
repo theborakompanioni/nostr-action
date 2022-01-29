@@ -1,10 +1,14 @@
 name: 'Wait'
 description: 'Wait a designated number of milliseconds'
 inputs:
-  milliseconds:  # id of input
-    description: 'number of milliseconds to wait'
+  relay:
+    description: 'nostr relay'
     required: true
-    default: '1000'
+    default: 'wss://relayer.fiatjaf.com'
+  content:
+    description: 'nostr relay'
+    required: true
+    
 outputs:
   time: # output will be available to future steps
     description: 'The current time after waiting'
