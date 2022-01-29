@@ -1,1 +1,3 @@
 dist/
+nostr-tools-commonjs/
+babel.config.js

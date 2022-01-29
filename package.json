@@ -5,11 +5,13 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint .",
-    "prepare": "&& ncc build index.js -o dist --source-map --license licenses.txt",
+    "prepare": "ncc build index.js -o dist --source-map --license licenses.txt",
     "test": "jest",
     "all": "npm run lint && npm run prepare && npm run test",
-    "nostr-tools-to-commonjs": "babel node_modules/nostr-tools/ --out-dir nostr-tools-commonjs"
+    "nostr-tools-to-commonjs": "babel node_modules/nostr-tools/ --out-dir nostr-tools-commonjs",
+    "example": "INPUT_RELAY=wss://relayer.fiatjaf.com INPUT_CONTENT=test INPUT_KEY=3ddd5602285899a946114506157c7997e5444528f3003f6134712147db19b678 node ./index.js"
   },
+
   "repository": {
     "type": "git",
     "url": "git+https://github.com/actions/javascript-action.git"

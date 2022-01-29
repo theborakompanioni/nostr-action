@@ -11574,12 +11574,12 @@ function relayConnect(url, onNotice = () => {}, onError = () => {}) {
         nextAttemptSeconds = 14400; // 4 hours
       }
 
-      console.log(`relay ${url} connection closed. reconnecting in ${nextAttemptSeconds} seconds.`);
+      /*console.log(`relay ${url} connection closed. reconnecting in ${nextAttemptSeconds} seconds.`);
       setTimeout(async () => {
         try {
           connect();
         } catch (err) {}
-      }, nextAttemptSeconds * 1000);
+      }, nextAttemptSeconds * 1000);*/
       wasClosed = true;
     };
 
@@ -11705,12 +11705,13 @@ function relayConnect(url, onNotice = () => {}, onError = () => {}) {
 /***/ 4258:
 /***/ ((module) => {
 
-let wait = function (milliseconds) {
+
+const wait = (milliseconds) => {
   return new Promise((resolve) => {
     if (typeof milliseconds !== 'number') {
       throw new Error('milliseconds not a number');
     }
-    setTimeout(() => resolve("done!"), milliseconds)
+    setTimeout(() => resolve(true), milliseconds)
   });
 };
 
@@ -11880,61 +11881,74 @@ module.exports = require("util");
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
-const core = __nccwpck_require__(2186);
-const wait = __nccwpck_require__(4258);
+const core = __nccwpck_require__(2186)
 const nostr = __nccwpck_require__(7765)
+const wait = __nccwpck_require__(4258)
 
-
-function doIt(relay, content) {
-  const pool = nostr.relayPool()
-
-  // pool.setPrivateKey('<hex>') // optional
-
-  pool.addRelay(relay, {read: false, write: true})
-
-  /*
-  const eventObject = nostr.getBlankEventnpm()
-  eventObject.kind = 1
-  eventObject.pubkey = ''
-  eventObject.content = content
-  eventObject.tags = []
-  eventObject.created_at = Math.round(Date.now() / 1000);
-  
-  pool.publish(eventObject, (status, url) => {
-    if (status === 0) {
-      console.log(`publish request sent to ${url}`)
+const waitFor = async (testFn, maxTries = 100, waitDuration = 100) => {
+  for (let i = 0; i < maxTries - 1; i++) {
+    if (testFn()) {
+      return true
+    } else {
+      await wait(waitDuration)
     }
-    if (status === 1) {
-      console.log(`event published by ${url}`, ev)
-    }
-  })*/
-
-  pool.removeRelay(relay)
+  }
+  return testFn()
 }
 
-// most @actions toolkit packages have async methods
-async function run() {
+const sendEvent = async (relayUrl, eventObject) => {
+  const pool = nostr.relayPool()
+  pool.setPolicy('wait', true)
+
+  const relay = pool.addRelay(relayUrl, {read: false, write: true})
+
   try {
-    const relay = core.getInput('relay');
-    const content = core.getInput('content');
+    const relayReady = await waitFor(() => relay.status === 1)
+    if (!relayReady) {
+      throw new Error(`Could not establish connection to relay ${relayUrl}`)
+    }
 
-    doIt(relay, content);
-    
-    const ms = 1000;
-
-    core.info(`Waiting ${ms} milliseconds ...`);
-
-    core.debug((new Date()).toTimeString()); // debug is only output if you set the secret `ACTIONS_RUNNER_DEBUG` to true
-    await wait(parseInt(ms));
-    core.info((new Date()).toTimeString());
-
-    core.setOutput('time', new Date().toTimeString());
-  } catch (error) {
-    core.setFailed(error.message);
+    return await pool.publish(eventObject)
+  } finally {
+    pool.removeRelay(relayUrl)
   }
 }
 
-run();
+const die = (msg) => { throw  new Error(msg) }
+
+async function run() {
+  try {
+    const relay = core.getInput('relay') || die('`relay` must not be empty')
+    const content = core.getInput('content') || die('`content` must not be empty')
+    const key = core.getInput('key') || die('`key` must not be empty')
+
+    console.debug('Creating event..')
+    const eventObject = nostr.getBlankEvent()
+    eventObject.kind = 1
+    eventObject.pubkey = Buffer.from(nostr.getPublicKey(key)).toString('hex')
+    eventObject.content = content
+    eventObject.tags = []
+    eventObject.created_at = Math.round(Date.now() / 1000)
+
+    console.debug('Signing event..')
+    const sig = Buffer.from(await nostr.signEvent(eventObject, key)).toString('hex')
+    eventObject.sig = sig
+    eventObject.id = nostr.getEventHash(eventObject)
+
+    console.debug('Validating event..')
+    nostr.validateEvent(eventObject) || die('event is not valid')
+
+    console.debug('Sending event..')
+    const event = await sendEvent(relay, eventObject)
+    console.log(event)
+    
+    core.setOutput('event', JSON.stringify(event))
+  } catch (error) {
+    core.setFailed(error.message)
+  }
+}
+
+run()
 
 })();
 
