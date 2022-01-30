@@ -34,7 +34,7 @@
     "@babel/cli": "^7.16.8",
     "@babel/core": "^7.16.12",
     "@babel/preset-env": "^7.16.11",
-    "@vercel/ncc": "^0.31.1",
+    "@vercel/ncc": "^0.33.1",
     "babel-jest": "^27.4.6",
     "eslint": "^8.0.0",
     "jest": "^27.2.5",
