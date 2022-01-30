@@ -65,6 +65,22 @@ Private key: 3ddd5602285899a946114506157c7997e5444528f3003f6134712147db19b678
 Public key: 17d188313f254d320183aab21c4ec7354ebad1e2435799431962e6118a56eff4
 ```
 
+#### Publish example event
+Send an example event via nostr (dry-run by default)
+
+```
+> npm run example
+```
+```
+dry-run enabled - connection to relays will be established, but no event will be sent.
+Creating event..
+Signing event..
+Validating event..
+Sending event.. (dry-run enabled: event will not be sent)
+[...]
+```
+
+
 # Resources
 - nostr (GitHub): https://github.com/fiatjaf/nostr
 - JavaScript GitHub Action (GitHub): https://github.com/actions/javascript-action
