@@ -2384,7 +2384,7 @@ module.exports = { mask, unmask };
 
 
 try {
-  module.exports = require(__nccwpck_require__.ab + "prebuilds/linux-x64/node.napi.node");
+  module.exports = require(__nccwpck_require__.ab + "prebuilds/linux-x64/node.napi1.node");
 } catch (e) {
   module.exports = __nccwpck_require__(7218);
 }
@@ -6400,7 +6400,7 @@ module.exports = isValidUTF8;
 
 
 try {
-  module.exports = require(__nccwpck_require__.ab + "prebuilds/linux-x64/node.napi1.node");
+  module.exports = require(__nccwpck_require__.ab + "prebuilds/linux-x64/node.napi.node");
 } catch (e) {
   module.exports = __nccwpck_require__(2534);
 }
