@@ -38,7 +38,8 @@ Successfully sent event {
 }
 ```
 
-## Package for distribution
+## Development
+### Package for distribution
 
 GitHub Actions will run the entry point from the action.yml. 
 
@@ -47,14 +48,22 @@ npm run prepare
 ```
 Packaging the action will create a packaged action in the dist folder.
 
-## Create a new release
+### Create a new release
 ```bash
 git tag -fa v1 -m "Update v1 tag"
-git push --tags
+git push --tags --force-with-lease
 ``` 
 
 See the [versioning documentation](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md)
 
+### Helper
+
+#### Generate nostr key pair
+```
+> npm run generate-key
+Private key: 3ddd5602285899a946114506157c7997e5444528f3003f6134712147db19b678
+Public key: 17d188313f254d320183aab21c4ec7354ebad1e2435799431962e6118a56eff4
+```
 
 # Resources
 - nostr (GitHub): https://github.com/fiatjaf/nostr

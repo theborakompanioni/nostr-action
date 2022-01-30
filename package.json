@@ -9,7 +9,8 @@
     "test": "jest",
     "all": "npm run lint && npm run prepare && npm run test",
     "nostr-tools-to-commonjs": "babel node_modules/nostr-tools/ --out-dir nostr-tools-commonjs",
-    "example": "INPUT_RELAY=wss://relayer.fiatjaf.com INPUT_CONTENT=example INPUT_KEY=3ddd5602285899a946114506157c7997e5444528f3003f6134712147db19b678 node ./index.js"
+    "example": "INPUT_RELAY=wss://relayer.fiatjaf.com INPUT_CONTENT=example INPUT_KEY=3ddd5602285899a946114506157c7997e5444528f3003f6134712147db19b678 node ./index.js",
+    "generate-key": "node ./generate_key.js"
   },
   "repository": {
     "type": "git",
