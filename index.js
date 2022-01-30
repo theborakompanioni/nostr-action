@@ -43,10 +43,10 @@ const die = (msg) => { throw  new Error(msg) }
 
 async function run() {
   try {
-    const relay = core.getInput('relay') || die('`relay` must not be empty')
-    const content = core.getInput('content') || die('`content` must not be empty')
-    const key = core.getInput('key') || die('`key` must not be empty')
-    const dry = core.getInput('dry') || false
+    const relay = core.getInput('relay', { required: true })
+    const content = core.getInput('content', { required: true })
+    const key = core.getInput('key', { required: true })
+    const dry = core.getInput('dry') === 'true'
 
     if (dry) {
       console.info('dry-run enabled - connection to relays will be established, but no event will be sent.')

@@ -29,6 +29,7 @@ on:
         description: dry-run mode - connection to relays will be established, but no event will be sent
         type: boolean
         default: false
+        required: true
 
 jobs:
   units:
@@ -36,13 +37,10 @@ jobs:
     permissions:
       contents: read
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
       - name: Publish event via nostr
-        uses: ./
+        uses: theborakompanioni/nostr-action@v1
         with:
-          dry: ${{ github.event.inputs.dry || false }}
+          dry: ${{ github.event.inputs.dry }}
           key: ${{ github.event.inputs.key }}
           relay: ${{ github.event.inputs.relay }}
           content: ${{ github.event.inputs.content }}

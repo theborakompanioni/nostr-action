@@ -2384,7 +2384,7 @@ module.exports = { mask, unmask };
 
 
 try {
-  module.exports = require(__nccwpck_require__.ab + "prebuilds/linux-x64/node.napi.node");
+  module.exports = require(__nccwpck_require__.ab + "prebuilds/linux-x64/node.napi1.node");
 } catch (e) {
   module.exports = __nccwpck_require__(7218);
 }
@@ -6400,7 +6400,7 @@ module.exports = isValidUTF8;
 
 
 try {
-  module.exports = require(__nccwpck_require__.ab + "prebuilds/linux-x64/node.napi1.node");
+  module.exports = require(__nccwpck_require__.ab + "prebuilds/linux-x64/node.napi.node");
 } catch (e) {
   module.exports = __nccwpck_require__(2534);
 }
@@ -11926,10 +11926,10 @@ const die = (msg) => { throw  new Error(msg) }
 
 async function run() {
   try {
-    const relay = core.getInput('relay') || die('`relay` must not be empty')
-    const content = core.getInput('content') || die('`content` must not be empty')
-    const key = core.getInput('key') || die('`key` must not be empty')
-    const dry = core.getInput('dry') || false
+    const relay = core.getInput('relay', { required: true })
+    const content = core.getInput('content', { required: true })
+    const key = core.getInput('key', { required: true })
+    const dry = core.getInput('dry') === 'true'
 
     if (dry) {
       console.info('dry-run enabled - connection to relays will be established, but no event will be sent.')
