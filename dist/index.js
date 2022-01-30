@@ -2384,7 +2384,7 @@ module.exports = { mask, unmask };
 
 
 try {
-  module.exports = require(__nccwpck_require__.ab + "prebuilds/linux-x64/node.napi1.node");
+  module.exports = require(__nccwpck_require__.ab + "prebuilds/linux-x64/node.napi.node");
 } catch (e) {
   module.exports = __nccwpck_require__(7218);
 }
@@ -6400,7 +6400,7 @@ module.exports = isValidUTF8;
 
 
 try {
-  module.exports = require(__nccwpck_require__.ab + "prebuilds/linux-x64/node.napi.node");
+  module.exports = require(__nccwpck_require__.ab + "prebuilds/linux-x64/node.napi1.node");
 } catch (e) {
   module.exports = __nccwpck_require__(2534);
 }
@@ -11896,23 +11896,31 @@ const waitFor = async (testFn, maxTries = 100, waitDuration = 100) => {
   return testFn()
 }
 
-const sendEvent = async (relayUrl, eventObject) => {
+const _sendEvent = (dryRun = false) => (async (relayUrl, eventObject) => {
   const pool = nostr.relayPool()
   pool.setPolicy('wait', true)
 
+  console.debug(`Connecting to relay ${relayUrl}..`)
   const relay = pool.addRelay(relayUrl, {read: false, write: true})
 
   try {
     const relayReady = await waitFor(() => relay.status === 1)
     if (!relayReady) {
       throw new Error(`Could not establish connection to relay ${relayUrl}`)
+    } else {
+      console.debug(`Successfully connected to relay ${relayUrl}`)
     }
 
-    return await pool.publish(eventObject)
+    return dryRun ? eventObject : await pool.publish(eventObject)
   } finally {
+    console.debug(`Disconnecting from relay ${relayUrl}..`)
     pool.removeRelay(relayUrl)
+    console.debug(`Disconnected from relay ${relayUrl}`)
   }
-}
+})
+
+const sendEvent = _sendEvent()
+const sendEventDry = _sendEvent(true)
 
 const die = (msg) => { throw  new Error(msg) }
 
@@ -11921,6 +11929,11 @@ async function run() {
     const relay = core.getInput('relay') || die('`relay` must not be empty')
     const content = core.getInput('content') || die('`content` must not be empty')
     const key = core.getInput('key') || die('`key` must not be empty')
+    const dry = core.getInput('dry') || false
+
+    if (dry) {
+      console.info('dry-run enabled - connection to relays will be established, but no event will be sent.')
+    }
 
     console.debug('Creating event..')
     const eventObject = nostr.getBlankEvent()
@@ -11937,10 +11950,10 @@ async function run() {
 
     console.debug('Validating event..')
     nostr.validateEvent(eventObject) || die('event is not valid')
-
-    console.debug('Sending event..')
-    const event = await sendEvent(relay, eventObject)
-    console.log(event)
+    
+    console.debug('Sending event..', !dry ? '' : '(dry-run enabled: event will not be sent)')
+    const event = dry ? await sendEventDry(relay, eventObject) : await sendEvent(relay, eventObject)
+    console.debug('Successfully sent event', event)
     
     core.setOutput('event', JSON.stringify(event))
   } catch (error) {

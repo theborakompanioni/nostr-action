@@ -17,6 +17,7 @@ test('wait 500 ms', async () => {
 
 // shows how the runner will run a javascript action with env / stdout protocol
 test('test runs', () => {
+  process.env['INPUT_DRY'] = true;
   process.env['INPUT_RELAY'] = 'wss://relayer.fiatjaf.com';
   process.env['INPUT_CONTENT'] = 'test';
   // test key taken from https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#test-vector-4
