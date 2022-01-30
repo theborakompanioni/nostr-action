@@ -68,7 +68,7 @@ async function run() {
     console.debug('Validating event..')
     nostr.validateEvent(eventObject) || die('event is not valid')
     
-    console.debug('Sending event..', dry ? '(dry-run enabled: event will not be sent)' : null)
+    console.debug('Sending event..', dry ? '(dry-run enabled: event will not be sent)' : '')
     const event = dry ? await sendEventDry(relay, eventObject) : await sendEvent(relay, eventObject)
     console.debug('Successfully sent event', event)
     
