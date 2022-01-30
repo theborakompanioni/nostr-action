@@ -1,0 +1,22 @@
+
+name: Send nostr Event on Issue
+
+on:
+  issues:
+    types: [opened, closed, reopened]
+
+jobs:
+  units:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Publish to nostr
+        #uses: theborakompanioni/nostr-action@v1
+        uses: ./
+        with:
+          key: ${{ secrets.NOSTR_KEY }}
+          relay: wss://relayer.fiatjaf.com
+          content: ${{ github.actor }} ${{ github.event.action }} issue \#${{ github.event.issue.number }}
