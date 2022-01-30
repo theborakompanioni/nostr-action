@@ -1,5 +1,5 @@
-name: 'Wait'
-description: 'Wait a designated number of milliseconds'
+name: 'Nostr Action'
+description: 'Send events with nostr'
 inputs:
   key:
     description: 'nostr private key'
@@ -17,8 +17,8 @@ inputs:
     default: false
     
 outputs:
-  eventHash:
-    description: 'The hash of the published event'
+  event:
+    description: 'The published event as JSON string'
 runs:
   using: 'node12'
   main: 'dist/index.js'
