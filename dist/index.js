@@ -11709,13 +11709,13 @@ function relayConnect(url, onNotice = () => {}, onError = () => {}) {
 const wait = (milliseconds) => {
   return new Promise((resolve) => {
     if (typeof milliseconds !== 'number') {
-      throw new Error('milliseconds not a number');
+      throw new Error('milliseconds not a number')
     }
     setTimeout(() => resolve(true), milliseconds)
-  });
-};
+  })
+}
 
-module.exports = wait;
+module.exports = wait
 
 
 /***/ }),
@@ -11951,7 +11951,7 @@ async function run() {
     console.debug('Validating event..')
     nostr.validateEvent(eventObject) || die('event is not valid')
     
-    console.debug('Sending event..', !dry ? '' : '(dry-run enabled: event will not be sent)')
+    console.debug('Sending event..', dry ? '(dry-run enabled: event will not be sent)' : null)
     const event = dry ? await sendEventDry(relay, eventObject) : await sendEvent(relay, eventObject)
     console.debug('Successfully sent event', event)
     

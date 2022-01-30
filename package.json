@@ -1,7 +1,7 @@
 {
-  "name": "javascript-action",
+  "name": "nostr-action",
   "version": "1.0.0",
-  "description": "JavaScript Action Template",
+  "description": "nostr GitHub Action",
   "main": "index.js",
   "scripts": {
     "lint": "eslint .",
@@ -11,10 +11,9 @@
     "nostr-tools-to-commonjs": "babel node_modules/nostr-tools/ --out-dir nostr-tools-commonjs",
     "example": "INPUT_RELAY=wss://relayer.fiatjaf.com INPUT_CONTENT=test INPUT_KEY=3ddd5602285899a946114506157c7997e5444528f3003f6134712147db19b678 node ./index.js"
   },
-
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/actions/javascript-action.git"
+    "url": "https://github.com/theborakompanioni/nostr-action.git"
   },
   "keywords": [
     "GitHub",
@@ -24,9 +23,9 @@
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/actions/javascript-action/issues"
+    "url": "https://github.com/theborakompanioni/nostr-action/issues"
   },
-  "homepage": "https://github.com/actions/javascript-action#readme",
+  "homepage": "https://github.com/theborakompanioni/nostr-action#readme",
   "dependencies": {
     "@actions/core": "^1.6.0"
   },
