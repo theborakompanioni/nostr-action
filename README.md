@@ -14,7 +14,7 @@ with:
   content: Hello World
 ```
 
-See the [actions tab](https://github.com/theborakompanioni/nostr-action/actions) for runs of this action! :rocket:
+See the [actions tab](https://github.com/theborakompanioni/nostr-action/actions) for runs of this action.
 
 ## Package for distribution
 
@@ -28,7 +28,7 @@ Packaging the action will create a packaged action in the dist folder.
 ## Create a new release
 ```bash
 git tag -fa v1 -m "Update v1 tag"
-git push --tags --force
+git push --tags
 ``` 
 
 See the [versioning documentation](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md)

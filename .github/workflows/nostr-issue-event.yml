@@ -19,4 +19,7 @@ jobs:
         with:
           key: ${{ secrets.NOSTR_KEY }}
           relay: wss://relayer.fiatjaf.com
-          content: ${{ github.actor }} ${{ github.event.action }} issue \#${{ github.event.issue.number }}
+          content: |
+            Issue ${{ github.event.action }}
+
+            ${{ github.actor }} ${{ github.event.action }} issue #${{ github.event.issue.number }}
