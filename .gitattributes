@@ -1,5 +1,7 @@
 dist/** -diff linguist-generated=true
 
+dist/**/*.node binary
+
 # ncc produces crlf instead of lf (which lets check-dist.yml action fail)
 # can be removed once https://github.com/vercel/ncc/issues/638 is resolved
-dist/index.js text eol=crlf
+dist/**/*.js text eol=crlf
