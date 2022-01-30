@@ -27,7 +27,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.issue = exports.issueCommand = void 0;
-const os = __importStar(__nccwpck_require__(2087));
+const os = __importStar(__nccwpck_require__(2037));
 const utils_1 = __nccwpck_require__(5278);
 /**
  * Commands
@@ -138,8 +138,8 @@ exports.getIDToken = exports.getState = exports.saveState = exports.group = expo
 const command_1 = __nccwpck_require__(7351);
 const file_command_1 = __nccwpck_require__(717);
 const utils_1 = __nccwpck_require__(5278);
-const os = __importStar(__nccwpck_require__(2087));
-const path = __importStar(__nccwpck_require__(5622));
+const os = __importStar(__nccwpck_require__(2037));
+const path = __importStar(__nccwpck_require__(1017));
 const oidc_utils_1 = __nccwpck_require__(8041);
 /**
  * The code to exit an action
@@ -448,8 +448,8 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.issueCommand = void 0;
 // We use any as a valid input type
 /* eslint-disable @typescript-eslint/no-explicit-any */
-const fs = __importStar(__nccwpck_require__(5747));
-const os = __importStar(__nccwpck_require__(2087));
+const fs = __importStar(__nccwpck_require__(7147));
+const os = __importStar(__nccwpck_require__(2037));
 const utils_1 = __nccwpck_require__(5278);
 function issueCommand(command, message) {
     const filePath = process.env[`GITHUB_${command}`];
@@ -671,8 +671,8 @@ exports.PersonalAccessTokenCredentialHandler = PersonalAccessTokenCredentialHand
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-const http = __nccwpck_require__(8605);
-const https = __nccwpck_require__(7211);
+const http = __nccwpck_require__(3685);
+const https = __nccwpck_require__(5687);
 const pm = __nccwpck_require__(6443);
 let tunnel;
 var HttpCodes;
@@ -1286,7 +1286,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.utils = exports.schnorr = exports.verify = exports.signSync = exports.sign = exports.getSharedSecret = exports.recoverPublicKey = exports.getPublicKey = exports.Signature = exports.Point = exports.CURVE = void 0;
-const crypto_1 = __importDefault(__nccwpck_require__(6417));
+const crypto_1 = __importDefault(__nccwpck_require__(6113));
 const _0n = BigInt(0);
 const _1n = BigInt(1);
 const _2n = BigInt(2);
@@ -2384,7 +2384,7 @@ module.exports = { mask, unmask };
 
 
 try {
-  module.exports = require(__nccwpck_require__.ab + "prebuilds/linux-x64/node.napi.node");
+  module.exports = require(__nccwpck_require__.ab + "prebuilds/linux-x64/node.napi1.node");
 } catch (e) {
   module.exports = __nccwpck_require__(7218);
 }
@@ -2395,7 +2395,7 @@ try {
 /***/ 5728:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
-module.exports = __nccwpck_require__(6417).createHash
+module.exports = __nccwpck_require__(6113).createHash
 
 
 /***/ }),
@@ -6025,13 +6025,13 @@ module.exports = __nccwpck_require__(4219);
 "use strict";
 
 
-var net = __nccwpck_require__(1631);
-var tls = __nccwpck_require__(4016);
-var http = __nccwpck_require__(8605);
-var https = __nccwpck_require__(7211);
-var events = __nccwpck_require__(8614);
-var assert = __nccwpck_require__(2357);
-var util = __nccwpck_require__(1669);
+var net = __nccwpck_require__(1808);
+var tls = __nccwpck_require__(4404);
+var http = __nccwpck_require__(3685);
+var https = __nccwpck_require__(5687);
+var events = __nccwpck_require__(2361);
+var assert = __nccwpck_require__(9491);
+var util = __nccwpck_require__(3837);
 
 
 exports.httpOverHttp = httpOverHttp;
@@ -6303,7 +6303,7 @@ exports.debug = debug; // for test
  * `npm install typedarray-to-buffer`
  */
 
-var isTypedArray = __nccwpck_require__(657).strict
+var isTypedArray = (__nccwpck_require__(657).strict)
 
 module.exports = function typedarrayToBuffer (arr) {
   if (isTypedArray(arr)) {
@@ -6400,7 +6400,7 @@ module.exports = isValidUTF8;
 
 
 try {
-  module.exports = require(__nccwpck_require__.ab + "prebuilds/linux-x64/node.napi1.node");
+  module.exports = require(__nccwpck_require__.ab + "prebuilds/linux-x64/node.napi.node");
 } catch (e) {
   module.exports = __nccwpck_require__(2534);
 }
@@ -6848,7 +6848,7 @@ exports.MessageEvent = MessageEvent;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var node_1 = __nccwpck_require__(4602);
 if (node_1.is_node())
-    global.WebSocket = __nccwpck_require__(2119).WebSocket;
+    global.WebSocket = (__nccwpck_require__(2119).WebSocket);
 //# sourceMappingURL=index.js.map
 
 /***/ }),
@@ -7184,12 +7184,12 @@ function destroy() {
 
 var utils = __nccwpck_require__(4407);
 var extend = utils.extend;
-var util = __nccwpck_require__(1669);
-var EventEmitter = __nccwpck_require__(8614).EventEmitter;
-var http = __nccwpck_require__(8605);
-var https = __nccwpck_require__(7211);
-var url = __nccwpck_require__(8835);
-var crypto = __nccwpck_require__(6417);
+var util = __nccwpck_require__(3837);
+var EventEmitter = (__nccwpck_require__(2361).EventEmitter);
+var http = __nccwpck_require__(3685);
+var https = __nccwpck_require__(5687);
+var url = __nccwpck_require__(7310);
+var crypto = __nccwpck_require__(6113);
 var WebSocketConnection = __nccwpck_require__(7745);
 var bufferAllocUnsafe = utils.bufferAllocUnsafe;
 
@@ -7550,9 +7550,9 @@ module.exports = WebSocketClient;
  *  limitations under the License.
  ***********************************************************************/
 
-var util = __nccwpck_require__(1669);
+var util = __nccwpck_require__(3837);
 var utils = __nccwpck_require__(4407);
-var EventEmitter = __nccwpck_require__(8614).EventEmitter;
+var EventEmitter = (__nccwpck_require__(2361).EventEmitter);
 var WebSocketFrame = __nccwpck_require__(2535);
 var BufferList = __nccwpck_require__(1091);
 var isValidUTF8 = __nccwpck_require__(5161);
@@ -8454,7 +8454,7 @@ function instrumentSocketForDebugging(connection, socket) {
  ***********************************************************************/
 
 var bufferUtil = __nccwpck_require__(3352);
-var bufferAllocUnsafe = __nccwpck_require__(4407).bufferAllocUnsafe;
+var bufferAllocUnsafe = (__nccwpck_require__(4407).bufferAllocUnsafe);
 
 const DECODE_HEADER = 1;
 const WAITING_FOR_16_BIT_LENGTH = 2;
@@ -8740,10 +8740,10 @@ module.exports = WebSocketFrame;
  *  limitations under the License.
  ***********************************************************************/
 
-var crypto = __nccwpck_require__(6417);
-var util = __nccwpck_require__(1669);
-var url = __nccwpck_require__(8835);
-var EventEmitter = __nccwpck_require__(8614).EventEmitter;
+var crypto = __nccwpck_require__(6113);
+var util = __nccwpck_require__(3837);
+var url = __nccwpck_require__(7310);
+var EventEmitter = (__nccwpck_require__(2361).EventEmitter);
 var WebSocketConnection = __nccwpck_require__(7745);
 
 var headerValueSplitRegExp = /,\s*/;
@@ -9279,9 +9279,9 @@ module.exports = WebSocketRequest;
  *  limitations under the License.
  ***********************************************************************/
 
-var extend = __nccwpck_require__(4407).extend;
-var util = __nccwpck_require__(1669);
-var EventEmitter = __nccwpck_require__(8614).EventEmitter;
+var extend = (__nccwpck_require__(4407).extend);
+var util = __nccwpck_require__(3837);
+var EventEmitter = (__nccwpck_require__(2361).EventEmitter);
 var WebSocketRouterRequest = __nccwpck_require__(950);
 
 function WebSocketRouter(config) {
@@ -9443,8 +9443,8 @@ module.exports = WebSocketRouter;
  *  limitations under the License.
  ***********************************************************************/
 
-var util = __nccwpck_require__(1669);
-var EventEmitter = __nccwpck_require__(8614).EventEmitter;
+var util = __nccwpck_require__(3837);
+var EventEmitter = (__nccwpck_require__(2361).EventEmitter);
 
 function WebSocketRouterRequest(webSocketRequest, resolvedProtocol) {
     // Superclass Constructor
@@ -9504,11 +9504,11 @@ module.exports = WebSocketRouterRequest;
  *  limitations under the License.
  ***********************************************************************/
 
-var extend = __nccwpck_require__(4407).extend;
+var extend = (__nccwpck_require__(4407).extend);
 var utils = __nccwpck_require__(4407);
-var util = __nccwpck_require__(1669);
+var util = __nccwpck_require__(3837);
 var debug = __nccwpck_require__(1831)('websocket:server');
-var EventEmitter = __nccwpck_require__(8614).EventEmitter;
+var EventEmitter = (__nccwpck_require__(2361).EventEmitter);
 var WebSocketRequest = __nccwpck_require__(1264);
 
 var WebSocketServer = function WebSocketServer(config) {
@@ -9760,7 +9760,7 @@ exports.extend = function extend(dest, source) {
 };
 
 exports.eventEmitterListenerCount =
-    __nccwpck_require__(8614).EventEmitter.listenerCount ||
+    (__nccwpck_require__(2361).EventEmitter.listenerCount) ||
     function(emitter, type) { return emitter.listeners(type).length; };
 
 exports.bufferAllocUnsafe = Buffer.allocUnsafe ?
@@ -9824,7 +9824,7 @@ BufferingLogger.prototype.printOutput = function(logFunction) {
 /***/ 8756:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
-module.exports = __nccwpck_require__(2847).version;
+module.exports = __nccwpck_require__(9794).version;
 
 
 /***/ }),
@@ -10272,8 +10272,8 @@ if (typeof process !== 'undefined' && process.type === 'renderer') {
  * Module dependencies.
  */
 
-var tty = __nccwpck_require__(3867);
-var util = __nccwpck_require__(1669);
+var tty = __nccwpck_require__(6224);
+var util = __nccwpck_require__(3837);
 
 /**
  * This is the Node.js implementation of `debug()`.
@@ -10453,14 +10453,14 @@ function createWritableStdioStream (fd) {
       break;
 
     case 'FILE':
-      var fs = __nccwpck_require__(5747);
+      var fs = __nccwpck_require__(7147);
       stream = new fs.SyncWriteStream(fd, { autoClose: false });
       stream._type = 'fs';
       break;
 
     case 'PIPE':
     case 'TCP':
-      var net = __nccwpck_require__(1631);
+      var net = __nccwpck_require__(1808);
       stream = new net.Socket({
         fd: fd,
         readable: false,
@@ -10688,9 +10688,9 @@ function plural(ms, n, name) {
 
 // bufferlist.js
 // Treat a linked list of buffers as a single variable-size buffer.
-var Buffer = __nccwpck_require__(4293).Buffer;
-var EventEmitter = __nccwpck_require__(8614).EventEmitter;
-var bufferAllocUnsafe = __nccwpck_require__(4407).bufferAllocUnsafe;
+var Buffer = (__nccwpck_require__(4300).Buffer);
+var EventEmitter = (__nccwpck_require__(2361).EventEmitter);
+var bufferAllocUnsafe = (__nccwpck_require__(4407).bufferAllocUnsafe);
 
 module.exports = BufferList;
 module.exports.BufferList = BufferList; // backwards compatibility
@@ -10872,7 +10872,7 @@ function BufferList(opts) {
         return self.take('binary');
     };
 }
-__nccwpck_require__(1669).inherits(BufferList, EventEmitter);
+(__nccwpck_require__(3837).inherits)(BufferList, EventEmitter);
 
 
 /***/ }),
@@ -11050,7 +11050,7 @@ exports.signEvent = signEvent;
 exports.validateEvent = validateEvent;
 exports.verifySignature = verifySignature;
 
-var _buffer = __nccwpck_require__(4293);
+var _buffer = __nccwpck_require__(4300);
 
 var _createHash = _interopRequireDefault(__nccwpck_require__(5728));
 
@@ -11720,15 +11720,7 @@ module.exports = wait;
 
 /***/ }),
 
-/***/ 2847:
-/***/ ((module) => {
-
-"use strict";
-module.exports = {"version":"1.0.34"};
-
-/***/ }),
-
-/***/ 2357:
+/***/ 9491:
 /***/ ((module) => {
 
 "use strict";
@@ -11736,7 +11728,7 @@ module.exports = require("assert");
 
 /***/ }),
 
-/***/ 4293:
+/***/ 4300:
 /***/ ((module) => {
 
 "use strict";
@@ -11744,7 +11736,7 @@ module.exports = require("buffer");
 
 /***/ }),
 
-/***/ 6417:
+/***/ 6113:
 /***/ ((module) => {
 
 "use strict";
@@ -11752,7 +11744,7 @@ module.exports = require("crypto");
 
 /***/ }),
 
-/***/ 8614:
+/***/ 2361:
 /***/ ((module) => {
 
 "use strict";
@@ -11760,7 +11752,7 @@ module.exports = require("events");
 
 /***/ }),
 
-/***/ 5747:
+/***/ 7147:
 /***/ ((module) => {
 
 "use strict";
@@ -11768,7 +11760,7 @@ module.exports = require("fs");
 
 /***/ }),
 
-/***/ 8605:
+/***/ 3685:
 /***/ ((module) => {
 
 "use strict";
@@ -11776,7 +11768,7 @@ module.exports = require("http");
 
 /***/ }),
 
-/***/ 7211:
+/***/ 5687:
 /***/ ((module) => {
 
 "use strict";
@@ -11784,7 +11776,7 @@ module.exports = require("https");
 
 /***/ }),
 
-/***/ 1631:
+/***/ 1808:
 /***/ ((module) => {
 
 "use strict";
@@ -11792,7 +11784,7 @@ module.exports = require("net");
 
 /***/ }),
 
-/***/ 2087:
+/***/ 2037:
 /***/ ((module) => {
 
 "use strict";
@@ -11800,7 +11792,7 @@ module.exports = require("os");
 
 /***/ }),
 
-/***/ 5622:
+/***/ 1017:
 /***/ ((module) => {
 
 "use strict";
@@ -11808,7 +11800,7 @@ module.exports = require("path");
 
 /***/ }),
 
-/***/ 4016:
+/***/ 4404:
 /***/ ((module) => {
 
 "use strict";
@@ -11816,7 +11808,7 @@ module.exports = require("tls");
 
 /***/ }),
 
-/***/ 3867:
+/***/ 6224:
 /***/ ((module) => {
 
 "use strict";
@@ -11824,7 +11816,7 @@ module.exports = require("tty");
 
 /***/ }),
 
-/***/ 8835:
+/***/ 7310:
 /***/ ((module) => {
 
 "use strict";
@@ -11832,11 +11824,19 @@ module.exports = require("url");
 
 /***/ }),
 
-/***/ 1669:
+/***/ 3837:
 /***/ ((module) => {
 
 "use strict";
 module.exports = require("util");
+
+/***/ }),
+
+/***/ 9794:
+/***/ ((module) => {
+
+"use strict";
+module.exports = {"version":"1.0.34"};
 
 /***/ })
 
