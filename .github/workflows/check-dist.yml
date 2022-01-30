@@ -3,7 +3,7 @@
 # `index.js` is the code that will run.
 # For our project, we generate this file through a build process from other source files.
 # We need to make sure the checked-in `index.js` actually matches what we expect it to be.
-name: Check dist/
+name: Verify GitHub Action
 
 on:
   push:
@@ -23,10 +23,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Set Node.js 12.x
+      - name: Setup nodejs
         uses: actions/setup-node@v2.5.1
         with:
-          node-version: 12.x
+          node-version: 14.16.1
 
       - name: Install dependencies
         run: npm ci

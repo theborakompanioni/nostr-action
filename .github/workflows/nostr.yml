@@ -1,4 +1,4 @@
-name: nostr
+name: Send nostr Event
 
 on:
   workflow_dispatch:
@@ -21,9 +21,14 @@ on:
         - wss://nostr-relay.freeberty.net
         - wss://nostr.bitcoiner.social
         - wss://nostr-relay.wlvs.space
+        - wss://nostr.onsats.org
       content:
         description: content (e.g. hello world!)
         required: true
+      dry:
+        description: dry-run mode - connection to relays will be established, but no event will be sent
+        type: boolean
+        default: false
 
 jobs:
   units:
@@ -37,6 +42,7 @@ jobs:
       - name: Publish event via nostr
         uses: ./
         with:
+          dry: ${{ github.event.inputs.dry || false }}
           key: ${{ github.event.inputs.key }}
           relay: ${{ github.event.inputs.relay }}
           content: ${{ github.event.inputs.content }}

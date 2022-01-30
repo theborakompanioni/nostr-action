@@ -1,10 +1,17 @@
-name: "units-test"
+name: Run Unit Tests
 on:
   pull_request:
   push:
     branches:
       - main
       - 'releases/*'
+
+env:
+  NOSTR_DRY: true
+  # test key taken from https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#test-vector-4
+  NOSTR_KEY: 3ddd5602285899a946114506157c7997e5444528f3003f6134712147db19b678
+  NOSTR_RELAY: wss://relayer.fiatjaf.com
+  NOSTR_CONTENT: test
 
 jobs:
   # unit tests
@@ -22,4 +29,7 @@ jobs:
     - uses: actions/checkout@v2
     - uses: ./
       with:
-        milliseconds: 1000
+        dry: ${{ env.NOSTR_DRY }}
+        key: ${{ env.NOSTR_KEY }}
+        relay: ${{ env.NOSTR_RELAY }}
+        content: ${{ env.NOSTR_CONTENT }}
