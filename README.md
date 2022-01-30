@@ -16,6 +16,28 @@ with:
 
 See the [actions tab](https://github.com/theborakompanioni/nostr-action/actions) for runs of this action.
 
+Example debug output:
+```
+Creating event..
+Signing event..
+Validating event..
+Sending event..
+Connecting to relay wss://relayer.fiatjaf.com..
+connected to wss://relayer.fiatjaf.com
+Successfully connected to relay wss://relayer.fiatjaf.com
+Disconnecting from relay wss://relayer.fiatjaf.com..
+Disconnected from relay wss://relayer.fiatjaf.com
+Successfully sent event {
+  kind: 1,
+  pubkey: '17d188313f254d320183aab21c4ec7354ebad1e2435799431962e6118a56eff4',
+  content: 'Pull Request closed\n\ntheborakompanioni closed PR#10',
+  tags: [],
+  created_at: 1643553583,
+  sig: '7165179884b13c2331a749bf04877738a7884bb1bd19eb863b94e8aba50a5d030163f3d99b1352dcb9bf5be82f85beb637886042e648a3b4adad322a11bef5fa',
+  id: '3e6b8184d7328242f0c1626ed5377db8d99f334d7f6065612b99a1f679b7ea09'
+}
+```
+
 ## Package for distribution
 
 GitHub Actions will run the entry point from the action.yml. 
