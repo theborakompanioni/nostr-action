@@ -20,7 +20,7 @@ test('test runs', () => {
   process.env['INPUT_DRY'] = true
   // test key taken from https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#test-vector-4
   process.env['INPUT_KEY'] = '3ddd5602285899a946114506157c7997e5444528f3003f6134712147db19b678'
-  process.env['INPUT_RELAY'] = 'wss://relayer.fiatjaf.com'
+  process.env['INPUT_RELAY'] = 'wss://nostr-pub.wellorder.net'
   process.env['INPUT_CONTENT'] = 'test'
   
   const ip = path.join(__dirname, 'index.js')
