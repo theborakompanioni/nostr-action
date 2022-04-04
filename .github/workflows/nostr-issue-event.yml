@@ -15,7 +15,7 @@ jobs:
         uses: theborakompanioni/nostr-action@v1
         with:
           key: ${{ secrets.NOSTR_KEY }}
-          relay: wss://relayer.fiatjaf.com
+          relay: wss://nostr-pub.wellorder.net
           content: |
             Issue ${{ github.event.action }}
 

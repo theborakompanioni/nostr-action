@@ -7,7 +7,7 @@ inputs:
   relay:
     description: 'nostr relay'
     required: true
-    default: 'wss://relayer.fiatjaf.com'
+    default: 'wss://nostr-pub.wellorder.net'
   content:
     description: 'nostr content'
     required: true
