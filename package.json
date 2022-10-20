@@ -39,6 +39,6 @@
     "babel-jest": "^28.1.2",
     "eslint": "^8.18.0",
     "jest": "^28.1.2",
-    "nostr-tools": "^0.23.4"
+    "nostr-tools": "^0.24.1"
   }
 }
