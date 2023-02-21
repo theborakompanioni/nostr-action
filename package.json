@@ -33,7 +33,7 @@
   },
   "devDependencies": {
     "@babel/cli": "^7.19.3",
-    "@babel/core": "^7.20.5",
+    "@babel/core": "^7.21.0",
     "@babel/preset-env": "^7.20.2",
     "@vercel/ncc": "^0.36.0",
     "babel-jest": "^29.3.1",
