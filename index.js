@@ -7,13 +7,12 @@ const { hexToBytes } = require('@noble/hashes/utils')
 useWebSocketImplementation(WebSocket)
 
 const _sendEvent = (dryRun = false) => (async (relayUrl, eventObject) => {
-  console.debug(`Connecting to relay ${relayUrl}..`)
+  core.debug(`Connecting to relay ${relayUrl}..`)
 
   let relay
   try {
     relay = await Relay.connect(relayUrl)
-
-    console.debug(`Successfully connected to relay ${relayUrl}`)
+    core.debug(`Successfully connected to relay ${relayUrl}`)
 
     if (!dryRun) {
       await relay.publish(eventObject)
@@ -23,9 +22,9 @@ const _sendEvent = (dryRun = false) => (async (relayUrl, eventObject) => {
   } catch (e) {
     throw new Error(`Could not establish connection to relay ${relayUrl}: ${e.message || 'Unknown reason'}.`)
   } finally {
-    console.debug(`Disconnecting from relay ${relayUrl}..`)
+    core.debug(`Disconnecting from relay ${relayUrl}..`)
     relay && relay.close()
-    console.debug(`Disconnected from relay ${relayUrl}`)
+    core.debug(`Disconnected from relay ${relayUrl}`)
   }
 })
 
@@ -49,7 +48,7 @@ async function run() {
     const dry = core.getBooleanInput('dry')
 
     if (dry) {
-      console.info('dry-run enabled - connection to relays will be established, but no event will be sent.')
+      core.info('dry-run enabled - connection to relays will be established, but no event will be sent.')
     }
 
     const eventTemplate = JSON.parse(templateString || DEFAULT_EVENT_TEMPLATE)
@@ -60,7 +59,7 @@ async function run() {
       throw new Error(`Could not build event from template: "${templateString}"`);
     }
 
-    console.debug('Creating event..')
+    core.debug('Creating event..')
     const rawEvent = {
       kind: eventTemplate.kind ?? DEFAULT_EVENT_TEMPLATE.kind,
       tags: eventTemplate.tags ?? DEFAULT_EVENT_TEMPLATE.tags,
@@ -68,15 +67,15 @@ async function run() {
       content,
     }
 
-    console.debug('Signing event..')
+    core.debug('Signing event..')
     const eventObject = finalizeEvent(rawEvent, key)
 
-    console.debug('Validating event..')
+    core.debug('Validating event..')
     verifyEvent(eventObject) || die('event is not valid')
     
-    console.debug('Sending event..', dry ? '(dry-run enabled: event will not be sent)' : '')
+    core.debug('Sending event..', dry ? '(dry-run enabled: event will not be sent)' : '')
     const event = dry ? await sendEventDry(relay, eventObject) : await sendEvent(relay, eventObject)
-    console.debug('Successfully sent event', event)
+    core.debug('Successfully sent event.')
     
     core.setOutput('event', JSON.stringify(event))
   } catch (error) {
