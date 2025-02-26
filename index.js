@@ -36,7 +36,7 @@ const die = (msg) => { throw new Error(msg) }
 const DEFAULT_EVENT_TEMPLATE = JSON.stringify({
   kind: 1,
   tags: [],
-  created_at: Math.round(Date.now() / 1_000),
+  created_at: Math.floor(Date.now() / 1_000),
 })
 
 async function run() {
