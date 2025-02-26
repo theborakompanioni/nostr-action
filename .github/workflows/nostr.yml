@@ -7,7 +7,7 @@ on:
         description: private key (e.g. 0123456789abcdef...)
         required: true
       relay:
-        description: relay (e.g. wss://nostr-pub.wellorder.net)
+        description: relay (e.g. wss://relay.damus.io)
         type: choice
         options: 
         - wss://nostr-pub.wellorder.net
