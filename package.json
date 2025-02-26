@@ -30,7 +30,9 @@
   },
   "homepage": "https://github.com/theborakompanioni/nostr-action#readme",
   "dependencies": {
-    "@actions/core": "^1.11.1"
+    "@actions/core": "^1.11.1",
+    "@noble/hashes": "^1.7.1",
+    "nostr-tools": "^2.10.4"
   },
   "devDependencies": {
     "@babel/cli": "^7.26.4",
@@ -39,7 +41,6 @@
     "@vercel/ncc": "^0.38.3",
     "babel-jest": "^29.7.0",
     "eslint": "^8.29.0",
-    "jest": "^29.7.0",
-    "nostr-tools": "^2.10.4"
+    "jest": "^29.7.0"
   }
 }
