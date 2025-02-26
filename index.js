@@ -1,6 +1,11 @@
 const core = require('@actions/core')
-const { hexToBytes } = require('@noble/hashes/utils')
+const WebSocket = require('ws')
 const { finalizeEvent, verifyEvent, Relay } = require('nostr-tools')
+const { hexToBytes } = require('@noble/hashes/utils')
+
+// using `useWebSocketImplementation` from `nostr-tools` did not work, it *must* be monkey-patched!
+// (last checked with nostr-tools v2.10.4 on 2025-02-26)
+global.WebSocket = WebSocket
 
 const _sendEvent = (dryRun = false) => (async (relayUrl, eventObject) => {
   console.debug(`Connecting to relay ${relayUrl}..`)
@@ -8,6 +13,7 @@ const _sendEvent = (dryRun = false) => (async (relayUrl, eventObject) => {
   let relay
   try {
     relay = await Relay.connect(relayUrl)
+
     console.debug(`Successfully connected to relay ${relayUrl}`)
 
     return dryRun ? eventObject : await relay.publish(eventObject)
@@ -41,7 +47,7 @@ async function run() {
       kind: 1,
       content,
       tags: [],
-      created_at: Math.round(Date.now() / 1000)
+      created_at: Math.round(Date.now() / 1000),
     }
 
     console.debug('Signing event..')

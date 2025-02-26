@@ -32,7 +32,8 @@
   "dependencies": {
     "@actions/core": "^1.11.1",
     "@noble/hashes": "^1.7.1",
-    "nostr-tools": "^2.10.4"
+    "nostr-tools": "^2.10.4",
+    "ws": "^8.18.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.26.4",
