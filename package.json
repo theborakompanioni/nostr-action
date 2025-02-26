@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "eslint .",
     "prepare": "npm run build",
-    "build": "ncc build index.js -o dist --source-map --license licenses.txt && npm run fix-ncc-out",
+    "build": "ncc build index.js --out dist --source-map --license licenses.txt && npm run fix-ncc-out",
     "fix-ncc-out": "sed -i 's/\\x0D$//' ./dist/*.js",
     "test": "jest",
     "all": "npm run lint && npm run build && npm run test",
