@@ -80,7 +80,8 @@ async function run() {
     
     core.setOutput('event', JSON.stringify(event))
   } catch (error) {
-    core.setFailed(error.message)
+    const reason = error instanceof Error ? error : error.message || 'Unknown reason.'
+    core.setFailed(reason)
   }
 }
 
