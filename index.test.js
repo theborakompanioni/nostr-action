@@ -3,6 +3,15 @@ const process = require('process')
 const cp = require('child_process')
 const path = require('path')
 
+const parseActionOutputs = (result) => {
+  return result.split('\n').filter((it) => it.startsWith('::set-output'))
+  // now has form "::set-output name=<name>::<value>"
+  .map((it) => it.substring('::set-output'.length).trimStart())
+  // now has form "name=<name>::value"
+  .map((it) => it.substring('name='.length).trimStart())
+  .map((it) => [it.substring(0, it.indexOf('::')), it.substring(it.indexOf('::') + 2)])
+}
+
 test('throws invalid number', async () => {
   await expect(wait('foo')).rejects.toThrow('milliseconds not a number')
 })
@@ -15,6 +24,8 @@ test('wait 500 ms', async () => {
   expect(delta).toBeGreaterThanOrEqual(500)
 })
 
+const NOW = Date.now()
+
 // shows how the runner will run a javascript action with env / stdout protocol
 test('test runs', () => {
   process.env['INPUT_DRY'] = true
@@ -24,6 +35,19 @@ test('test runs', () => {
   process.env['INPUT_CONTENT'] = 'test'
   
   const ip = path.join(__dirname, 'index.js')
-  const result = cp.execSync(`node ${ip}`, {env: process.env}).toString()
+  const result = cp.execSync(`node ${ip}`, { env: process.env }).toString()
   console.log(result)
+
+  const outputs = parseActionOutputs(result)
+
+  const events = outputs.filter(([key]) => key === "event").map((([_, val]) => val))
+  expect(events.length).toBe(1)
+
+  const event = JSON.parse(events[0])
+  console.log(event)
+
+  expect(event.kind).toBe(1)
+  expect(event.pubkey).toBe('17d188313f254d320183aab21c4ec7354ebad1e2435799431962e6118a56eff4')
+  expect(event.created_at).toBeGreaterThanOrEqual(Math.floor(NOW / 1_000))
+  expect(event.content).toBe('test')
 })
