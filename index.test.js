@@ -1,5 +1,4 @@
 const wait = require('./wait')
-const process = require('process')
 const cp = require('child_process')
 const path = require('path')
 
@@ -27,15 +26,17 @@ test('wait 500 ms', async () => {
 const NOW = Date.now()
 
 // shows how the runner will run a javascript action with env / stdout protocol
-test('test runs', () => {
-  process.env['INPUT_DRY'] = true
-  // test key taken from https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#test-vector-4
-  process.env['INPUT_KEY'] = '3ddd5602285899a946114506157c7997e5444528f3003f6134712147db19b678'
-  process.env['INPUT_RELAY'] = 'wss://relay.damus.io'
-  process.env['INPUT_CONTENT'] = 'test'
-  
+test('it should verify normal behaviour', () => {
+  const env = {
+    INPUT_DRY: true,
+    // test key taken from https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#test-vector-4
+    INPUT_KEY: '3ddd5602285899a946114506157c7997e5444528f3003f6134712147db19b678',
+    INPUT_RELAY: 'wss://nostr-dev.wellorder.net',
+    INPUT_CONTENT: 'test',
+  }
+
   const ip = path.join(__dirname, 'index.js')
-  const result = cp.execSync(`node ${ip}`, { env: process.env }).toString()
+  const result = cp.execSync(`node ${ip}`, { env }).toString()
   console.log(result)
 
   const outputs = parseActionOutputs(result)
@@ -44,8 +45,6 @@ test('test runs', () => {
   expect(events.length).toBe(1)
 
   const event = JSON.parse(events[0])
-  console.log(event)
-
   expect(event.kind).toBe(1)
   expect(event.pubkey).toBe('17d188313f254d320183aab21c4ec7354ebad1e2435799431962e6118a56eff4')
   expect(event.created_at).toBeGreaterThanOrEqual(Math.floor(NOW / 1_000))
@@ -54,23 +53,26 @@ test('test runs', () => {
   expect(event.sig.length).toBe(128)
 })
 
-// shows how the runner will run a javascript action with env / stdout protocol
-test('test template input', () => {
-  process.env['INPUT_DRY'] = true
-  // test key taken from https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#test-vector-4
-  process.env['INPUT_KEY'] = '3ddd5602285899a946114506157c7997e5444528f3003f6134712147db19b678'
-  process.env['INPUT_RELAY'] = 'wss://nostr-pub.wellorder.net'
-  process.env['INPUT_TEMPLATE'] = JSON.stringify({
-    kind: 42,
-    tags: [
-      ['expiration', '1600000000']
-    ],
-    content: 'this should be replaced by the `INPUT_CONTENT` args'
-  })
-  process.env['INPUT_CONTENT'] = 'test'
+test('it should verify event template handling', () => {
+  const env = {
+    INPUT_DRY: true,
+    // test key taken from https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#test-vector-4
+    INPUT_KEY: '3ddd5602285899a946114506157c7997e5444528f3003f6134712147db19b678',
+    INPUT_RELAY: 'wss://nostr-dev.wellorder.net',
+    INPUT_EVENT_TEMPLATE: JSON.stringify({
+      kind: 42,
+      tags: [
+        ['expiration', '1600000000']
+      ],
+      created_at: 1337,
+      content: 'this should be replaced by the `INPUT_CONTENT` args',
+      ignored: 'this should be ignored'
+    }),
+    INPUT_CONTENT: 'test',
+  }
 
   const ip = path.join(__dirname, 'index.js')
-  const result = cp.execSync(`node ${ip}`, { env: process.env }).toString()
+  const result = cp.execSync(`node ${ip}`, { env }).toString()
   console.log(result)
 
   const outputs = parseActionOutputs(result)
@@ -79,12 +81,11 @@ test('test template input', () => {
   expect(events.length).toBe(1)
 
   const event = JSON.parse(events[0])
-  console.log(event)
-
   expect(event.kind).toBe(42)
   expect(event.pubkey).toBe('17d188313f254d320183aab21c4ec7354ebad1e2435799431962e6118a56eff4')
-  expect(event.created_at).toBeGreaterThanOrEqual(Math.floor(NOW / 1_000))
+  expect(event.created_at).toBe(1337)
   expect(event.tags).toEqual([['expiration', '1600000000']])
   expect(event.content).toBe('test')
   expect(event.sig.length).toBe(128)
+  expect(event.ignored).not.toBeDefined()
 })
