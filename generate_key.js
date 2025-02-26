@@ -1,9 +1,10 @@
 
-const nostr = require('./nostr-tools-commonjs')
+const { generateSecretKey, getPublicKey } = require('nostr-tools')
+const { bytesToHex } = require('@noble/hashes/utils')
 
-const privateKeyHex = nostr.generatePrivateKey();
-const publicKey = nostr.getPublicKey(privateKeyHex);
-const publicKeyHex = Buffer.from(publicKey).toString('hex')
+const privateKey = generateSecretKey();
+const privateKeyHex = bytesToHex(privateKey)
+const publicKeyHex = getPublicKey(privateKey);
 
 console.info(`Private key: ${privateKeyHex}`)
 console.info(`Public key: ${publicKeyHex}`)
