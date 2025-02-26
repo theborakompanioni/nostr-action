@@ -43,9 +43,13 @@ async function run() {
   try {
     const relay = core.getInput('relay', { required: true })
     const content = core.getInput('content', { required: true })
-    const key = hexToBytes(core.getInput('key', { required: true }))
+    const key = core.getInput('key', { required: true })
     const templateString = core.getInput('template')
     const dry = core.getBooleanInput('dry')
+
+    core.setSecret(key)
+
+    const keyRaw = hexToBytes(key)
 
     if (dry) {
       core.info('dry-run enabled - connection to relays will be established, but no event will be sent.')
@@ -68,7 +72,7 @@ async function run() {
     }
 
     core.debug('Signing event..')
-    const eventObject = finalizeEvent(rawEvent, key)
+    const eventObject = finalizeEvent(rawEvent, keyRaw)
 
     core.debug('Validating event..')
     verifyEvent(eventObject) || die('event is not valid')
