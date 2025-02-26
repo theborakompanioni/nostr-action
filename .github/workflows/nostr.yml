@@ -7,21 +7,16 @@ on:
         description: private key (e.g. 0123456789abcdef...)
         required: true
       relay:
-        description: relay (e.g. wss://relayer.fiatjaf.com)
+        description: relay (e.g. wss://nostr-pub.wellorder.net)
         type: choice
         options: 
         - wss://nostr-pub.wellorder.net
-        - wss://relayer.fiatjaf.com
+        - wss://relay.damus.io
+        - wss://relay.primal.net
+        - wss://nostr.swiss-enigma.ch
         - wss://nostr.rocks
-        - wss://rsslay.fiatjaf.com
-        - wss://nostr-relay.herokuapp.com
-        - wss://freedom-relay.herokuapp.com/ws
-        - wss://nodestr-relay.dolu.dev/ws
-        - wss://nostrrr.bublina.eu.org
-        - wss://nostr-relay.freeberty.net
+        - wss://relay.nostr.band
         - wss://nostr.bitcoiner.social
-        - wss://nostr-relay.wlvs.space
-        - wss://nostr.onsats.org
       content:
         description: content (e.g. hello world!)
         required: true
