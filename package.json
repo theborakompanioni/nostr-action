@@ -5,10 +5,11 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint .",
-    "prepare": "ncc build index.js -o dist --source-map --license licenses.txt && npm run fix-ncc-out",
+    "prepare": "npm run build",
+    "build": "ncc build index.js -o dist --source-map --license licenses.txt && npm run fix-ncc-out",
     "fix-ncc-out": "sed -i 's/\\x0D$//' ./dist/*.js",
     "test": "jest",
-    "all": "npm run lint && npm run prepare && npm run test",
+    "all": "npm run lint && npm run build && npm run test",
     "nostr-tools-to-commonjs": "babel node_modules/nostr-tools/ --out-dir nostr-tools-commonjs",
     "example": "INPUT_DRY=true INPUT_RELAY=wss://relay.damus.io INPUT_CONTENT=example INPUT_KEY=3ddd5602285899a946114506157c7997e5444528f3003f6134712147db19b678 node ./index.js",
     "generate-key": "node ./generate_key.js"
