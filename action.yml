@@ -11,6 +11,10 @@ inputs:
   content:
     description: 'nostr content'
     required: true
+  template:
+    description: 'nostr event template'
+    required: false
+    default: '{ "kind": 1, "tags": [] }'
   dry:
     description: dry-run mode - connection to relays will be established, but no event will be sent
     type: boolean

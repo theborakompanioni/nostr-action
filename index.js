@@ -15,7 +15,11 @@ const _sendEvent = (dryRun = false) => (async (relayUrl, eventObject) => {
 
     console.debug(`Successfully connected to relay ${relayUrl}`)
 
-    return dryRun ? eventObject : await relay.publish(eventObject)
+    if (!dryRun) {
+      await relay.publish(eventObject)
+    }
+
+    return eventObject
   } catch (e) {
     throw new Error(`Could not establish connection to relay ${relayUrl}: ${e.message || 'Unknown reason'}.`)
   } finally {
@@ -30,23 +34,38 @@ const sendEventDry = _sendEvent(true)
 
 const die = (msg) => { throw new Error(msg) }
 
+const DEFAULT_EVENT_TEMPLATE = JSON.stringify({
+  kind: 1,
+  tags: [],
+  created_at: Math.round(Date.now() / 1_000),
+})
+
 async function run() {
   try {
     const relay = core.getInput('relay', { required: true })
     const content = core.getInput('content', { required: true })
     const key = hexToBytes(core.getInput('key', { required: true }))
+    const templateString = core.getInput('template')
     const dry = core.getInput('dry') === 'true'
 
     if (dry) {
       console.info('dry-run enabled - connection to relays will be established, but no event will be sent.')
     }
 
+    const eventTemplate = JSON.parse(templateString || DEFAULT_EVENT_TEMPLATE)
+    const validEventTemplate = typeof eventTemplate === 'object'
+      && !Array.isArray(eventTemplate)
+      && eventTemplate !== null
+    if (!validEventTemplate) {
+      throw new Error(`Could not build event from template: "${templateString}"`);
+    }
+
     console.debug('Creating event..')
     const rawEvent = {
-      kind: 1,
+      kind: eventTemplate.kind ?? DEFAULT_EVENT_TEMPLATE.kind,
+      tags: eventTemplate.tags ?? DEFAULT_EVENT_TEMPLATE.tags,
+      created_at: eventTemplate.created_at ?? DEFAULT_EVENT_TEMPLATE.created_at,
       content,
-      tags: [],
-      created_at: Math.round(Date.now() / 1000),
     }
 
     console.debug('Signing event..')
