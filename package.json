@@ -29,16 +29,16 @@
   },
   "homepage": "https://github.com/theborakompanioni/nostr-action#readme",
   "dependencies": {
-    "@actions/core": "^1.10.0"
+    "@actions/core": "^1.11.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.19.3",
-    "@babel/core": "^7.20.5",
-    "@babel/preset-env": "^7.20.2",
-    "@vercel/ncc": "^0.36.0",
-    "babel-jest": "^29.3.1",
+    "@babel/cli": "^7.26.4",
+    "@babel/core": "^7.26.9",
+    "@babel/preset-env": "^7.26.9",
+    "@vercel/ncc": "^0.38.3",
+    "babel-jest": "^29.7.0",
     "eslint": "^8.29.0",
-    "jest": "^29.3.1",
+    "jest": "^29.7.0",
     "nostr-tools": "^2.10.4"
   }
 }
