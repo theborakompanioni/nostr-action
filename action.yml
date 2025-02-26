@@ -7,11 +7,10 @@ inputs:
   relay:
     description: 'nostr relay'
     required: true
-    default: 'wss://relay.damus.io'
   content:
     description: 'nostr content'
     required: true
-  template:
+  event_template:
     description: 'nostr event template'
     required: false
     default: '{ "kind": 1, "tags": [] }'

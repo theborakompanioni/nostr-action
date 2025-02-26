@@ -45,8 +45,8 @@ async function run() {
     const relay = core.getInput('relay', { required: true })
     const content = core.getInput('content', { required: true })
     const key = core.getInput('key', { required: true })
-    const templateString = core.getInput('template')
-    const dry = core.getBooleanInput('dry')
+    const eventTemplateString = core.getInput('event_template', { required: false })
+    const dry = core.getBooleanInput('dry', { required: false })
 
     core.setSecret(key)
 
@@ -56,12 +56,12 @@ async function run() {
       core.info('dry-run enabled - connection to relays will be established, but no event will be sent.')
     }
 
-    const eventTemplate = JSON.parse(templateString || DEFAULT_EVENT_TEMPLATE_STRING)
+    const eventTemplate = JSON.parse(eventTemplateString || DEFAULT_EVENT_TEMPLATE_STRING)
     const validEventTemplate = typeof eventTemplate === 'object'
       && !Array.isArray(eventTemplate)
       && eventTemplate !== null
     if (!validEventTemplate) {
-      throw new Error(`Could not build event from template: "${templateString}"`);
+      throw new Error(`Could not build event from template: "${eventTemplateString}"`);
     }
 
     core.debug('Creating event..')
