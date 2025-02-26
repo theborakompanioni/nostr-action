@@ -46,7 +46,7 @@ async function run() {
     const content = core.getInput('content', { required: true })
     const key = hexToBytes(core.getInput('key', { required: true }))
     const templateString = core.getInput('template')
-    const dry = core.getInput('dry') === 'true'
+    const dry = core.getBooleanInput('dry')
 
     if (dry) {
       console.info('dry-run enabled - connection to relays will be established, but no event will be sent.')
