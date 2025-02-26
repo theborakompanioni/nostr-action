@@ -12,7 +12,7 @@ const _sendEvent = (dryRun = false) => (async (relayUrl, eventObject) => {
 
     return dryRun ? eventObject : await relay.publish(eventObject)
   } catch (e) {
-    throw new Error(`Could not establish connection to relay ${relayUrl}: ${e?.message || 'Unknown reason'}.`)
+    throw new Error(`Could not establish connection to relay ${relayUrl}: ${e.message || 'Unknown reason'}.`)
   } finally {
     console.debug(`Disconnecting from relay ${relayUrl}..`)
     relay && relay.close()
@@ -23,7 +23,7 @@ const _sendEvent = (dryRun = false) => (async (relayUrl, eventObject) => {
 const sendEvent = _sendEvent()
 const sendEventDry = _sendEvent(true)
 
-const die = (msg) => { throw  new Error(msg) }
+const die = (msg) => { throw new Error(msg) }
 
 async function run() {
   try {
