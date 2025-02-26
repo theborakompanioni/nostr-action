@@ -33,11 +33,12 @@ const sendEventDry = _sendEvent(true)
 
 const die = (msg) => { throw new Error(msg) }
 
-const DEFAULT_EVENT_TEMPLATE = JSON.stringify({
+const DEFAULT_EVENT_TEMPLATE = {
   kind: 1,
   tags: [],
   created_at: Math.floor(Date.now() / 1_000),
-})
+}
+const DEFAULT_EVENT_TEMPLATE_STRING = JSON.stringify(DEFAULT_EVENT_TEMPLATE)
 
 async function run() {
   try {
@@ -55,7 +56,7 @@ async function run() {
       core.info('dry-run enabled - connection to relays will be established, but no event will be sent.')
     }
 
-    const eventTemplate = JSON.parse(templateString || DEFAULT_EVENT_TEMPLATE)
+    const eventTemplate = JSON.parse(templateString || DEFAULT_EVENT_TEMPLATE_STRING)
     const validEventTemplate = typeof eventTemplate === 'object'
       && !Array.isArray(eventTemplate)
       && eventTemplate !== null
