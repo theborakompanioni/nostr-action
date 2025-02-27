@@ -18,7 +18,6 @@ inputs:
     description: dry-run mode - connection to relays will be established, but no event will be sent
     type: boolean
     default: false
-    
 outputs:
   event:
     description: 'The published event as JSON string'

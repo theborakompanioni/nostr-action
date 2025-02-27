@@ -2,7 +2,9 @@
 
 # nostr GitHub Action
 
-Use this action to send events with [nostr](https://github.com/fiatjaf/nostr). :rocket:
+Use this action to send events with [nostr](https://github.com/nostr-protocol/nostr). :rocket:
+
+[See the actions tab](https://github.com/theborakompanioni/nostr-action/actions) for runs of this action.
 
 ## Usage
 
@@ -10,31 +12,63 @@ Use this action to send events with [nostr](https://github.com/fiatjaf/nostr). :
 uses: theborakompanioni/nostr-action@v1
 with:
   key: ${{ secrets.NOSTR_KEY }}
-  relay: wss://relayer.fiatjaf.com
+  relay: wss://nostr-dev.wellorder.net
   content: Hello World
 ```
 
-See the [actions tab](https://github.com/theborakompanioni/nostr-action/actions) for runs of this action.
+This will create and publish an event like the following:
+```json
+{
+  "id": "e32f2696b5cfb0c2d0def7c78206421f89560547eaeee2f9f4ef8b802633d289",
+  "pubkey": "17d188313f254d320183aab21c4ec7354ebad1e2435799431962e6118a56eff4",
+  "kind": 1,
+  "created_at": 1740648622,
+  "tags": [],
+  "content": "Hello World",
+  "sig": "4c41949bf08c081427e2f8322b55fd1ea4432c663bb1cd10bcbdd9f013d51a66544666e2abb7cdb51b3bad6b48ef8ebc41ccf345982f6fefe22cc956cc29ef09"
+}
+```
 
 Example debug output:
 ```
-Creating event..
-Signing event..
-Validating event..
-Sending event..
-Connecting to relay wss://relayer.fiatjaf.com..
-connected to wss://relayer.fiatjaf.com
-Successfully connected to relay wss://relayer.fiatjaf.com
-Disconnecting from relay wss://relayer.fiatjaf.com..
-Disconnected from relay wss://relayer.fiatjaf.com
-Successfully sent event {
-  kind: 1,
-  pubkey: '17d188313f254d320183aab21c4ec7354ebad1e2435799431962e6118a56eff4',
-  content: 'Pull Request closed\n\ntheborakompanioni closed PR#10',
-  tags: [],
-  created_at: 1643553583,
-  sig: '7165179884b13c2331a749bf04877738a7884bb1bd19eb863b94e8aba50a5d030163f3d99b1352dcb9bf5be82f85beb637886042e648a3b4adad322a11bef5fa',
-  id: '3e6b8184d7328242f0c1626ed5377db8d99f334d7f6065612b99a1f679b7ea09'
+::debug::Creating event..
+::debug::Signing event..
+::debug::Validating event..
+::debug::Sending event..
+::debug::Connecting to relay wss://nostr-dev.wellorder.net..
+::debug::Successfully connected to relay wss://nostr-dev.wellorder.net
+::debug::Disconnecting from relay wss://nostr-dev.wellorder.net..
+::debug::Disconnected from relay wss://nostr-dev.wellorder.net
+::debug::Successfully sent event.
+
+::set-output name=event::{"kind":1,"tags":[],"created_at":1740648622,"content":"Hello World","pubkey":"17d188313f254d320183aab21c4ec7354ebad1e2435799431962e6118a56eff4","id":"e32f2696b5cfb0c2d0def7c78206421f89560547eaeee2f9f4ef8b802633d289","sig":"4c41949bf08c081427e2f8322b55fd1ea4432c663bb1cd10bcbdd9f013d51a66544666e2abb7cdb51b3bad6b48ef8ebc41ccf345982f6fefe22cc956cc29ef09"}
+```
+
+### Custom event template
+
+```yaml
+uses: theborakompanioni/nostr-action@v2
+with:
+  key: ${{ secrets.NOSTR_KEY }}
+  relay: wss://nostr-dev.wellorder.net
+  content: Hello World
+  event_template: '{ "kind": 42, "created_at": 1500000000, "tags": [ ["expiration", "1600000000"] ] }'
+```
+
+```json
+{
+  "id": "59d4a413b08126cbe5b61a9e01bfcb1277b4c765c167a0daac77288c657270a1",
+  "pubkey": "17d188313f254d320183aab21c4ec7354ebad1e2435799431962e6118a56eff4",
+  "kind": 42,
+  "created_at": 1500000000,
+  "tags": [
+    [
+      "expiration",
+      "1600000000"
+    ]
+  ],
+  "content": "Hello World",
+  "sig": "cc3be9bef353e480f45b2d4efadb902b1b4932f9f1d27219ab462869a0e5487d5aa6eabd7327f5da325ac9bd7a562a29a448b1a9e65ee318e05054126d22bb7e"
 }
 ```
 
@@ -44,14 +78,15 @@ Successfully sent event {
 GitHub Actions will run the entry point from the action.yml. 
 
 ```bash
-npm run prepare
+npm run build
 ```
 Packaging the action will create a packaged action in the dist folder.
 
 ### Create a new release
 ```bash
-git tag -fa v1 -m "Update v1 tag"
-git push --tags --force-with-lease
+git tag --annotate --sign v1.x.x --message "Relase v1.x.x"
+git tag --force --annotate --sign v1 --message "Update v1 tag"
+git push --tags
 ``` 
 
 See the [versioning documentation](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md)
@@ -73,14 +108,18 @@ Send an example event via nostr (dry-run by default)
 ```
 ```
 dry-run enabled - connection to relays will be established, but no event will be sent.
-Creating event..
-Signing event..
-Validating event..
-Sending event.. (dry-run enabled: event will not be sent)
+::debug::Creating event..
+::debug::Signing event..
+::debug::Validating event..
+::debug::Sending event..
+::debug::Connecting to relay wss://nostr-dev.wellorder.net..
+::debug::Successfully connected to relay wss://nostr-dev.wellorder.net
+::debug::Disconnecting from relay wss://nostr-dev.wellorder.net..
+::debug::Disconnected from relay wss://nostr-dev.wellorder.net
+::debug::Successfully sent event.
 [...]
 ```
 
-
-# Resources
-- nostr (GitHub): https://github.com/fiatjaf/nostr
+## Resources
+- nostr (GitHub): https://github.com/nostr-protocol/nostr
 - JavaScript GitHub Action (GitHub): https://github.com/actions/javascript-action
