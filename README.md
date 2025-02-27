@@ -48,7 +48,7 @@ Example debug output:
 ### Custom event template
 
 ```yaml
-uses: theborakompanioni/nostr-action@v2
+uses: theborakompanioni/nostr-action@v1
 with:
   key: ${{ secrets.NOSTR_KEY }}
   relay: wss://nostr-dev.wellorder.net
@@ -85,12 +85,12 @@ Packaging the action will create a packaged action in the dist folder.
 
 ### Create a new release
 ```bash
-git tag --annotate --sign v1.x.x --message "Relase v1.x.x"
+git tag --annotate --sign v1.x.x --message "Release v1.x.x"
 git tag --force --annotate --sign v1 --message "Update v1 tag"
 git push --tags
 ``` 
 
-See the [versioning documentation](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md)
+See the [versioning documentation](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md).
 
 ### Helper
 

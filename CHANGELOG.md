@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.0] - 2025-02-27
 ### Added
 - Ability to specify event template (supports custom `kind`, `tags` and `created_at`)
 
@@ -17,5 +18,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Initial release
 
-[Unreleased]: https://github.com/theborakompanioni/nostr-action/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/theborakompanioni/nostr-action/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/theborakompanioni/nostr-action/releases/tag/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/theborakompanioni/nostr-action/releases/tag/v1.0.0

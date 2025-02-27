@@ -1,6 +1,6 @@
 {
   "name": "nostr-action",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "nostr GitHub Action",
   "main": "index.js",
   "scripts": {
