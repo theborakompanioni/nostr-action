@@ -1,11 +1,10 @@
 const core = require('@actions/core')
 const WebSocket = require('ws')
-const { finalizeEvent, verifyEvent, Relay } = require('nostr-tools')
+const { finalizeEvent, verifyEvent } = require('nostr-tools')
+const { Relay, useWebSocketImplementation } = require('nostr-tools/relay')
 const { hexToBytes } = require('@noble/hashes/utils')
 
-// using `useWebSocketImplementation` from `nostr-tools` did not work, it *must* be monkey-patched!
-// (last checked with nostr-tools v2.10.4 on 2025-02-26)
-global.WebSocket = WebSocket
+useWebSocketImplementation(WebSocket)
 
 const _sendEvent = (dryRun = false) => (async (relayUrl, eventObject) => {
   console.debug(`Connecting to relay ${relayUrl}..`)
