@@ -1,3 +1,4 @@
+[![GitHub Release](https://img.shields.io/github/v/release/theborakompanioni/nostr-action?cacheSeconds=3600)](https://github.com/theborakompanioni/nostr-action/releases/latest)
 [![Run Unit Tests](https://github.com/theborakompanioni/nostr-action/actions/workflows/test.yml/badge.svg)](https://github.com/theborakompanioni/nostr-action/actions/workflows/test.yml)
 
 # nostr GitHub Action
