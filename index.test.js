@@ -1,6 +1,7 @@
-const wait = require('./wait')
 const cp = require('child_process')
 const path = require('path')
+
+const NOW = Date.now()
 
 const parseActionOutputs = (result) => {
   return result.split('\n').filter((it) => it.startsWith('::set-output'))
@@ -10,20 +11,6 @@ const parseActionOutputs = (result) => {
   .map((it) => it.substring('name='.length).trimStart())
   .map((it) => [it.substring(0, it.indexOf('::')), it.substring(it.indexOf('::') + 2)])
 }
-
-test('throws invalid number', async () => {
-  await expect(wait('foo')).rejects.toThrow('milliseconds not a number')
-})
-
-test('wait 500 ms', async () => {
-  const start = new Date()
-  await wait(500)
-  const end = new Date()
-  var delta = Math.abs(end - start)
-  expect(delta).toBeGreaterThanOrEqual(500)
-})
-
-const NOW = Date.now()
 
 // shows how the runner will run a javascript action with env / stdout protocol
 test('it should verify normal behaviour', () => {
