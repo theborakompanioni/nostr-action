@@ -1,5 +1,9 @@
 name: 'Nostr Action'
 description: 'Send events with nostr'
+author: 'Thebora Kompanioni'
+branding:
+  icon: heart
+  color: purple
 inputs:
   key:
     description: 'nostr private key'
