@@ -8,7 +8,9 @@
     "prepare": "npm run build",
     "build": "ncc build index.js --out dist --source-map --license licenses.txt && npm run fix-ncc-out",
     "fix-ncc-out": "sed -i 's/\\x0D$//' ./dist/*.js",
-    "test": "jest",
+    "test": "npm run test-unit && npm run test-integration",
+    "test-unit": "jest --config jest.config.ts --passWithNoTests",
+    "test-integration": "jest --config jest.config.integration.ts",
     "all": "npm run lint && npm run build && npm run test",
     "example": "INPUT_DRY=true INPUT_RELAY=wss://nostr-dev.wellorder.net INPUT_CONTENT=example INPUT_KEY=3ddd5602285899a946114506157c7997e5444528f3003f6134712147db19b678 node ./index.js",
     "generate-key": "node ./generate_key.js"
