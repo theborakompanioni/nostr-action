@@ -91,8 +91,18 @@ const run = async () => {
     verifyEvent(event) || die('event is not valid')
     
     core.debug('Sending event..', dry ? '(dry-run enabled: event will not be sent)' : '')
-    for(const relay of relays) {
-      dry ? await sendEventDry(relay, event) : await sendEvent(relay, event)
+
+    let errors = []
+    for (const relay of relays) {
+      try {
+        dry ? await sendEventDry(relay, event) : await sendEvent(relay, event)
+      } catch (e) {
+        core.warning(e)
+        errors = [...errors, e]
+      }
+    }
+    if (errors.length === relays.length) {
+      throw new Error('Failed to send event to any relay. ')
     }
     core.debug('Successfully sent event.')
     
