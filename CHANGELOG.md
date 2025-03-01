@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Populate action summary with event info
 - Support nip19 encoding for key input param (nsec)
 
 ## [1.1.0] - 2025-02-27
