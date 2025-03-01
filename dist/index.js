@@ -22,6 +22,7 @@ const _sendEvent = (dryRun = false) => (async (relayUrl, event) => {
     core.debug(`Successfully connected to relay ${relayUrl}`)
 
     if (!dryRun) {
+      core.debug(`Publishing event ${event.id}..`)
       await relay.publish(event)
       core.debug(`Successfully published event ${event.id}`)
     }
@@ -50,15 +51,24 @@ const DEFAULT_EVENT_TEMPLATE_STRING = JSON.stringify(DEFAULT_EVENT_TEMPLATE)
 
 const run = async () => {
   try {
-    const relay = core.getInput('relay', { required: true })
+    const relayString = core.getInput('relay', { required: false })
+    const relaysString = core.getInput('relays', { required: false })
     const content = core.getInput('content', { required: true })
     const key = core.getInput('key', { required: true })
     const eventTemplateString = core.getInput('event_template', { required: false })
     const dry = core.getBooleanInput('dry', { required: false })
 
+    const keyRaw = key.startsWith('nsec') ? nip19.decode(key).data : hexToBytes(key)
     core.setSecret(key)
 
-    const keyRaw = key.startsWith('nsec') ? nip19.decode(key).data : hexToBytes(key)
+    const relays = `${relayString},${relaysString}`.split(',')
+      .map((it) => it.trim())
+      .filter((it) => it.startsWith('wss://') || it.startsWith('ws://'))
+      .filter((it, index, array) => array.indexOf(it) === index)
+
+    if (relays.length === 0) {
+      throw new Error(`Could not parse relays from input: "${relayString},${relaysString}"`);
+    }
 
     if (dry) {
       core.info('dry-run enabled - connection to relays will be established, but no event will be sent.')
@@ -69,7 +79,7 @@ const run = async () => {
       && !Array.isArray(eventTemplate)
       && eventTemplate !== null
     if (!validEventTemplate) {
-      throw new Error(`Could not build event from template: "${eventTemplateString}"`);
+      throw new Error(`Could not build event from template: "${eventTemplateString}"`)
     }
 
     core.debug('Creating event..')
@@ -81,13 +91,15 @@ const run = async () => {
     }
 
     core.debug('Signing event..')
-    const eventObject = finalizeEvent(rawEvent, keyRaw)
+    const event = finalizeEvent(rawEvent, keyRaw)
 
     core.debug('Validating event..')
-    verifyEvent(eventObject) || die('event is not valid')
+    verifyEvent(event) || die('event is not valid')
     
     core.debug('Sending event..', dry ? '(dry-run enabled: event will not be sent)' : '')
-    const event = dry ? await sendEventDry(relay, eventObject) : await sendEvent(relay, eventObject)
+    for(const relay of relays) {
+      dry ? await sendEventDry(relay, event) : await sendEvent(relay, event)
+    }
     core.debug('Successfully sent event.')
     
     core.setOutput('event', JSON.stringify(event))
