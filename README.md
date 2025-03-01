@@ -53,7 +53,12 @@ with:
   key: ${{ secrets.NOSTR_KEY }}
   relay: wss://nostr-dev.wellorder.net
   content: Hello World
-  event_template: '{ "kind": 42, "created_at": 1500000000, "tags": [ ["expiration", "1600000000"] ] }'
+  event_template: |
+    {
+      "kind": 42,
+      "created_at": 1500000000,
+      "tags": [ ["expiration", "1600000000"] ]
+    }
 ```
 
 ```json

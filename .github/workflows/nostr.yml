@@ -32,6 +32,8 @@ jobs:
     permissions:
       contents: read
     steps:
+      - name: Set expiration timestamp as env variable
+        run: echo "EXPIRATION=$(expr $EPOCHSECONDS + 3600)" >> $GITHUB_ENV
       - name: Publish event via nostr
         uses: theborakompanioni/nostr-action@v1
         with:
@@ -39,3 +41,7 @@ jobs:
           key: ${{ github.event.inputs.key }}
           relay: ${{ github.event.inputs.relay }}
           content: ${{ github.event.inputs.content }}
+          event_template: |
+            {
+              "tags": [ ["expiration", "${{ env.EXPIRATION }}"] ]
+            }
