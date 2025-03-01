@@ -1,5 +1,5 @@
 
-name: Send nostr Event on Issue
+name: Send Nostr Event on Issue
 
 on:
   issues:

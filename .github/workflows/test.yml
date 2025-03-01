@@ -1,4 +1,4 @@
-name: Run Unit Tests
+name: Run Unit & Integration Tests
 on:
   pull_request:
   push:
@@ -10,20 +10,21 @@ env:
   NOSTR_DRY: true
   # test key taken from https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#test-vector-4
   NOSTR_KEY: 3ddd5602285899a946114506157c7997e5444528f3003f6134712147db19b678
-  NOSTR_RELAY: wss://relay.damus.io
+  NOSTR_RELAY: wss://nostr-dev.wellorder.net
   NOSTR_CONTENT: test
 
 jobs:
-  # unit tests
-  units:
+  # unit and integrationtests
+  test:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
     - run: npm ci
-    - run: npm test
+    - run: npm run test-unit
+    - run: npm run test-integration
 
   # test action works running from the graph
-  test:
+  test-action:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
