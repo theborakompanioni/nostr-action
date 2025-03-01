@@ -1,4 +1,4 @@
-name: Send nostr Event
+name: Send Nostr Event
 
 on:
   workflow_dispatch:

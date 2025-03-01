@@ -6,7 +6,7 @@ const { hexToBytes } = require('@noble/hashes/utils')
 
 useWebSocketImplementation(WebSocket)
 
-const _sendEvent = (dryRun = false) => (async (relayUrl, eventObject) => {
+const _sendEvent = (dryRun = false) => (async (relayUrl, event) => {
   core.debug(`Connecting to relay ${relayUrl}..`)
 
   let relay
@@ -15,10 +15,11 @@ const _sendEvent = (dryRun = false) => (async (relayUrl, eventObject) => {
     core.debug(`Successfully connected to relay ${relayUrl}`)
 
     if (!dryRun) {
-      await relay.publish(eventObject)
+      await relay.publish(event)
+      core.debug(`Successfully published event ${event.id}`)
     }
 
-    return eventObject
+    return event
   } catch (e) {
     throw new Error(`Could not establish connection to relay ${relayUrl}: ${e.message || 'Unknown reason'}.`)
   } finally {

@@ -1,5 +1,5 @@
-name: 'Nostr Action'
-description: 'Send events with nostr'
+name: 'Nostr Send Event Action'
+description: 'Send events with Nostr'
 author: 'Thebora Kompanioni'
 branding:
   icon: heart

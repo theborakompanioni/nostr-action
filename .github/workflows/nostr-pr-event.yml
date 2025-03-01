@@ -1,5 +1,5 @@
 
-name: Send nostr Event on Pull Request
+name: Send Nostr Event on Pull Request
 
 on:
   pull_request:
