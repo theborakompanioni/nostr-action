@@ -10,7 +10,8 @@ const TEST_KEY_NSEC = 'nsec18hw4vq3gtzv6j3s3g5rp2lrejlj5g3fg7vqr7cf5wys50kcekeuq
 const DEFAULT_ENV = {
   INPUT_DRY: false,
   INPUT_KEY: TEST_KEY_HEX,
-  INPUT_RELAY: 'wss://localhost',
+  INPUT_RELAY: 'wss://localhost, wss://localhost:8080',
+  INPUT_RELAYS: '',
   INPUT_CONTENT: 'test',
   INPUT_EVENT_TEMPLATE: JSON.stringify({
     tags: [
@@ -47,6 +48,7 @@ test('it should verify normal behaviour', async () => {
 
   core.getInput
     .mockReturnValueOnce(env.INPUT_RELAY)
+    .mockReturnValueOnce(env.INPUT_RELAYS)
     .mockReturnValueOnce(env.INPUT_CONTENT)
     .mockReturnValueOnce(env.INPUT_KEY)
     .mockReturnValueOnce(env.INPUT_EVENT_TEMPLATE)
@@ -90,6 +92,7 @@ test('it should verify event template handling', async () => {
 
   core.getInput
     .mockReturnValueOnce(env.INPUT_RELAY)
+    .mockReturnValueOnce(env.INPUT_RELAYS)
     .mockReturnValueOnce(env.INPUT_CONTENT)
     .mockReturnValueOnce(env.INPUT_KEY)
     .mockReturnValueOnce(env.INPUT_EVENT_TEMPLATE)
@@ -126,6 +129,7 @@ test('it should fail on invalid key', async () => {
 
   core.getInput
     .mockReturnValueOnce(env.INPUT_RELAY)
+    .mockReturnValueOnce(env.INPUT_RELAYS)
     .mockReturnValueOnce(env.INPUT_CONTENT)
     .mockReturnValueOnce(env.INPUT_KEY)
     .mockReturnValueOnce(env.INPUT_EVENT_TEMPLATE)
@@ -139,6 +143,29 @@ test('it should fail on invalid key', async () => {
   expect(failed.value.message).toBe('hex string expected, got unpadded hex of length 7')
 })
 
+test('it should fail on invalid relays', async () => {
+  const env = {
+    ...DEFAULT_ENV,
+    INPUT_RELAY: 'http://localhost',
+    INPUT_RELAYS: 'smtp://localhost, ,.,,invalid,',
+  }
+
+  core.getInput
+    .mockReturnValueOnce(env.INPUT_RELAY)
+    .mockReturnValueOnce(env.INPUT_RELAYS)
+    .mockReturnValueOnce(env.INPUT_CONTENT)
+    .mockReturnValueOnce(env.INPUT_KEY)
+    .mockReturnValueOnce(env.INPUT_EVENT_TEMPLATE)
+
+  const failed = {}
+  core.setFailed.mockImplementation((value) => failed.value = value)
+
+  void await run()
+
+  expect(failed.value).toBeDefined()
+  expect(failed.value.message).toBe('Could not parse relays from input: "http://localhost,smtp://localhost, ,.,,invalid,"')
+})
+
 test('it should accept nip19 encoding as key (nsec)', async () => {
   const env = {
     ...DEFAULT_ENV,
@@ -147,6 +174,7 @@ test('it should accept nip19 encoding as key (nsec)', async () => {
 
   core.getInput
     .mockReturnValueOnce(env.INPUT_RELAY)
+    .mockReturnValueOnce(env.INPUT_RELAYS)
     .mockReturnValueOnce(env.INPUT_CONTENT)
     .mockReturnValueOnce(env.INPUT_KEY)
     .mockReturnValueOnce(env.INPUT_EVENT_TEMPLATE)
