@@ -1,6 +1,22 @@
 const cp = require('child_process')
 const path = require('path')
 
+// test key taken from https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#test-vector-4
+const TEST_KEY_HEX = '3ddd5602285899a946114506157c7997e5444528f3003f6134712147db19b678'
+const TEST_KEY_NSEC = 'nsec18hw4vq3gtzv6j3s3g5rp2lrejlj5g3fg7vqr7cf5wys50kcekeuq0vkmxn'
+
+const DEFAULT_ENV = {
+  INPUT_DRY: true,
+  INPUT_KEY: TEST_KEY_HEX,
+  INPUT_RELAY: 'wss://nostr-dev.wellorder.net',
+  INPUT_CONTENT: 'test',
+  INPUT_EVENT_TEMPLATE: JSON.stringify({
+    tags: [
+      ['expiration', '1']
+    ],
+  }),
+}
+
 const NOW = Date.now()
 
 const parseActionOutputs = (result) => {
@@ -15,11 +31,9 @@ const parseActionOutputs = (result) => {
 // shows how the runner will run a javascript action with env / stdout protocol
 test('it should verify normal behaviour', () => {
   const env = {
-    INPUT_DRY: true,
-    // test key taken from https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#test-vector-4
-    INPUT_KEY: '3ddd5602285899a946114506157c7997e5444528f3003f6134712147db19b678',
-    INPUT_RELAY: 'wss://nostr-dev.wellorder.net',
-    INPUT_CONTENT: 'test',
+    ...DEFAULT_ENV,
+    INPUT_KEY: TEST_KEY_NSEC,
+    INPUT_EVENT_TEMPLATE: '',
   }
 
   const ip = path.join(__dirname, 'index.js')
@@ -42,10 +56,7 @@ test('it should verify normal behaviour', () => {
 
 test('it should verify event template handling', () => {
   const env = {
-    INPUT_DRY: true,
-    // test key taken from https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#test-vector-4
-    INPUT_KEY: '3ddd5602285899a946114506157c7997e5444528f3003f6134712147db19b678',
-    INPUT_RELAY: 'wss://nostr-dev.wellorder.net',
+    ...DEFAULT_ENV,
     INPUT_EVENT_TEMPLATE: JSON.stringify({
       kind: 42,
       tags: [
@@ -55,7 +66,6 @@ test('it should verify event template handling', () => {
       content: 'this should be replaced by the `INPUT_CONTENT` args',
       ignored: 'this should be ignored'
     }),
-    INPUT_CONTENT: 'test',
   }
 
   const ip = path.join(__dirname, 'index.js')

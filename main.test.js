@@ -3,6 +3,22 @@ const nostrToolsRelay = require('nostr-tools/relay')
 
 const { run } = require('./main')
 
+// test key taken from https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#test-vector-4
+const TEST_KEY_HEX = '3ddd5602285899a946114506157c7997e5444528f3003f6134712147db19b678'
+const TEST_KEY_NSEC = 'nsec18hw4vq3gtzv6j3s3g5rp2lrejlj5g3fg7vqr7cf5wys50kcekeuq0vkmxn'
+
+const DEFAULT_ENV = {
+  INPUT_DRY: false,
+  INPUT_KEY: TEST_KEY_HEX,
+  INPUT_RELAY: 'wss://localhost',
+  INPUT_CONTENT: 'test',
+  INPUT_EVENT_TEMPLATE: JSON.stringify({
+    tags: [
+      ['expiration', '1']
+    ],
+  }),
+}
+
 const NOW = Date.now()
 
 jest.mock('@actions/core')
@@ -23,37 +39,9 @@ nostrToolsRelay.Relay.connect.mockImplementation(async (relay) => {
   }
 })
 
-test('it should fail on invalid key', async () => {
-  const env = {
-    INPUT_DRY: false,
-    INPUT_KEY: 'invalid',
-    INPUT_RELAY: 'wss://localhost',
-    INPUT_EVENT_TEMPLATE: '',
-    INPUT_CONTENT: 'test',
-  }
-
-  core.getInput
-    .mockReturnValueOnce(env.INPUT_RELAY)
-    .mockReturnValueOnce(env.INPUT_CONTENT)
-    .mockReturnValueOnce(env.INPUT_KEY)
-    .mockReturnValueOnce(env.INPUT_EVENT_TEMPLATE)
-
-  const failed = {}
-  core.setFailed.mockImplementation((value) => failed.value = value)
-
-  void await run()
-
-  expect(failed.value).toBeDefined()
-  expect(failed.value.message).toBe('hex string expected, got unpadded hex of length 7')
-})
-
 test('it should verify normal behaviour', async () => {
   const env = {
-    INPUT_DRY: false,
-    // test key taken from https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#test-vector-4
-    INPUT_KEY: '3ddd5602285899a946114506157c7997e5444528f3003f6134712147db19b678',
-    INPUT_RELAY: 'wss://localhost',
-    INPUT_CONTENT: 'test',
+    ...DEFAULT_ENV,
     INPUT_EVENT_TEMPLATE: '',
   }
 
@@ -88,10 +76,7 @@ test('it should verify normal behaviour', async () => {
 
 test('it should verify event template handling', async () => {
   const env = {
-    INPUT_DRY: false,
-    // test key taken from https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#test-vector-4
-    INPUT_KEY: '3ddd5602285899a946114506157c7997e5444528f3003f6134712147db19b678',
-    INPUT_RELAY: 'wss://localhost',
+    ...DEFAULT_ENV,
     INPUT_EVENT_TEMPLATE: JSON.stringify({
       kind: 42,
       tags: [
@@ -101,7 +86,6 @@ test('it should verify event template handling', async () => {
       content: 'this should be replaced by the `INPUT_CONTENT` args',
       ignored: 'this should be ignored'
     }),
-    INPUT_CONTENT: 'test',
   }
 
   core.getInput
@@ -132,4 +116,52 @@ test('it should verify event template handling', async () => {
   expect(event.content).toBe('test')
   expect(event.sig.length).toBe(128)
   expect(event.ignored).not.toBeDefined()
+})
+
+test('it should fail on invalid key', async () => {
+  const env = {
+    ...DEFAULT_ENV,
+    INPUT_KEY: 'invalid',
+  }
+
+  core.getInput
+    .mockReturnValueOnce(env.INPUT_RELAY)
+    .mockReturnValueOnce(env.INPUT_CONTENT)
+    .mockReturnValueOnce(env.INPUT_KEY)
+    .mockReturnValueOnce(env.INPUT_EVENT_TEMPLATE)
+
+  const failed = {}
+  core.setFailed.mockImplementation((value) => failed.value = value)
+
+  void await run()
+
+  expect(failed.value).toBeDefined()
+  expect(failed.value.message).toBe('hex string expected, got unpadded hex of length 7')
+})
+
+test('it should accept nip19 encoding as key (nsec)', async () => {
+  const env = {
+    ...DEFAULT_ENV,
+    INPUT_KEY: TEST_KEY_NSEC,
+  }
+
+  core.getInput
+    .mockReturnValueOnce(env.INPUT_RELAY)
+    .mockReturnValueOnce(env.INPUT_CONTENT)
+    .mockReturnValueOnce(env.INPUT_KEY)
+    .mockReturnValueOnce(env.INPUT_EVENT_TEMPLATE)
+
+  core.getBooleanInput
+    .mockReturnValueOnce(env.INPUT_DRY)
+
+  const output = {}
+  core.setOutput.mockImplementation((name, value) => output[name] = value)
+
+  void await run()
+
+  expect(output.event).toBeDefined()
+
+  const event = JSON.parse(output.event)
+  expect(event.pubkey).toBe('17d188313f254d320183aab21c4ec7354ebad1e2435799431962e6118a56eff4')
+  expect(event.sig.length).toBe(128)
 })

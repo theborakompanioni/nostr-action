@@ -2,6 +2,7 @@ const core = require('@actions/core')
 const WebSocket = require('ws')
 const { finalizeEvent, verifyEvent } = require('nostr-tools')
 const { Relay, useWebSocketImplementation } = require('nostr-tools/relay')
+const nip19 = require('nostr-tools/nip19')
 const { hexToBytes } = require('@noble/hashes/utils')
 
 useWebSocketImplementation(WebSocket)
@@ -51,7 +52,7 @@ const run = async () => {
 
     core.setSecret(key)
 
-    const keyRaw = hexToBytes(key)
+    const keyRaw = key.startsWith('nsec') ? nip19.decode(key).data : hexToBytes(key)
 
     if (dry) {
       core.info('dry-run enabled - connection to relays will be established, but no event will be sent.')

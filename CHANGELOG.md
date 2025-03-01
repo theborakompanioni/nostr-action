@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Support nip19 encoding for key input param (nsec)
+
 ## [1.1.0] - 2025-02-27
 ### Added
 - Ability to specify event template (supports custom `kind`, `tags` and `created_at`)
