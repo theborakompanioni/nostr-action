@@ -1,11 +1,14 @@
+
 const cp = require('child_process')
 const path = require('path')
+const { promises: fs } = require('fs')
 
 // test key taken from https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#test-vector-4
 const TEST_KEY_HEX = '3ddd5602285899a946114506157c7997e5444528f3003f6134712147db19b678'
 const TEST_KEY_NSEC = 'nsec18hw4vq3gtzv6j3s3g5rp2lrejlj5g3fg7vqr7cf5wys50kcekeuq0vkmxn'
 
 const DEFAULT_ENV = {
+  GITHUB_STEP_SUMMARY: 'github_step_summary.local',
   INPUT_DRY: true,
   INPUT_KEY: TEST_KEY_HEX,
   INPUT_RELAY: 'wss://nostr-dev.wellorder.net',
@@ -27,6 +30,16 @@ const parseActionOutputs = (result) => {
   .map((it) => it.substring('name='.length).trimStart())
   .map((it) => [it.substring(0, it.indexOf('::')), it.substring(it.indexOf('::') + 2)])
 }
+
+beforeAll(async () => {
+  await fs.writeFile(DEFAULT_ENV.GITHUB_STEP_SUMMARY, '', {
+    encoding: 'utf8'
+  })
+})
+
+afterAll(async () => {
+  await fs.rm(DEFAULT_ENV.GITHUB_STEP_SUMMARY)
+})
 
 // shows how the runner will run a javascript action with env / stdout protocol
 test('it should verify normal behaviour', () => {

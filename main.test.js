@@ -1,6 +1,5 @@
 const core = require('@actions/core')
 const nostrToolsRelay = require('nostr-tools/relay')
-
 const { run } = require('./main')
 
 // test key taken from https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#test-vector-4
@@ -23,6 +22,12 @@ const DEFAULT_ENV = {
 const NOW = Date.now()
 
 jest.mock('@actions/core')
+core.summary = {
+  addLink: () => core.summary,
+  addDetails: () => core.summary,
+  write: async() => {},
+}
+
 jest.mock('nostr-tools/relay')
 
 core.debug.mockImplementation(console.debug)
