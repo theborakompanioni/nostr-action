@@ -6,8 +6,7 @@
   "scripts": {
     "lint": "eslint .",
     "prepare": "npm run build",
-    "build": "ncc build index.js --out dist --source-map --license licenses.txt && npm run fix-ncc-out",
-    "fix-ncc-out": "sed -i 's/\\x0D$//' ./dist/*.js",
+    "build": "ncc build index.js --out dist --source-map --license licenses.txt",
     "test": "npm run test-unit",
     "test-unit": "jest --config jest.config.ts",
     "test-integration": "jest --config jest.config.integration.ts",
