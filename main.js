@@ -114,9 +114,10 @@ const run = async () => {
 
     const nevent = nip19.neventEncode({ id: event.id })
     const njump = `https://njump.me/${nevent}`
-    core.summary.addLink(njump, njump)
+    await core.summary.addLink(njump, njump)
+      .addDetails('Event JSON', JSON.stringify(event, null, 2))
+      .write()
 
-    core.summary.addDetails('Event JSON', JSON.stringify(event, null, 2))
   } catch (error) {
     const reason = error instanceof Error ? error : error.message || 'Unknown reason.'
     core.setFailed(reason)
