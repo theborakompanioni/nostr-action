@@ -114,8 +114,10 @@ const run = async () => {
 
     const nevent = nip19.neventEncode({ id: event.id })
     const njump = `https://njump.me/${nevent}`
-    await core.summary.addLink(njump, njump)
-      .addDetails('Event JSON', JSON.stringify(event, null, 2))
+    await core.summary
+      .addHeading('Event JSON', 2)
+      .addCodeBlock(JSON.stringify(event, null, 2), 'json')
+      .addLink(njump, njump)
       .write()
 
   } catch (error) {

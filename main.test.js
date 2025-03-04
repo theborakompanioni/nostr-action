@@ -24,7 +24,8 @@ const NOW = Date.now()
 jest.mock('@actions/core')
 core.summary = {
   addLink: () => core.summary,
-  addDetails: () => core.summary,
+  addHeading: () => core.summary,
+  addCodeBlock: () => core.summary,
   write: async() => {},
 }
 

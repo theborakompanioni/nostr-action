@@ -8,7 +8,7 @@ const TEST_KEY_HEX = '3ddd5602285899a946114506157c7997e5444528f3003f6134712147db
 const TEST_KEY_NSEC = 'nsec18hw4vq3gtzv6j3s3g5rp2lrejlj5g3fg7vqr7cf5wys50kcekeuq0vkmxn'
 
 const DEFAULT_ENV = {
-  GITHUB_STEP_SUMMARY: 'github_step_summary.local',
+  GITHUB_STEP_SUMMARY: './github_step_summary.itest.local',
   INPUT_DRY: true,
   INPUT_KEY: TEST_KEY_HEX,
   INPUT_RELAY: 'wss://nostr-dev.wellorder.net',
