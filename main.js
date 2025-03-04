@@ -52,6 +52,10 @@ const run = async () => {
     const eventTemplateString = core.getInput('event_template', { required: false })
     const dry = core.getBooleanInput('dry', { required: false })
 
+    if (relayString && relayString.length > 0) {
+      core.warning('Input `relay` is deprecated and will be removed in v2. Please use `relays` instead.')
+    }
+
     const keyRaw = key.startsWith('nsec') ? nip19.decode(key).data : hexToBytes(key)
     core.setSecret(key)
 
