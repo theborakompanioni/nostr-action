@@ -3,7 +3,7 @@
 
 # nostr GitHub Action
 
-Use this action to send events with [nostr](https://github.com/nostr-protocol/nostr). :rocket:
+Use this action to send events with [Nostr](https://github.com/nostr-protocol/nostr). :rocket:
 
 [See the actions tab](https://github.com/theborakompanioni/nostr-action/actions) for runs of this action.
 
@@ -99,7 +99,7 @@ See the [versioning documentation](https://github.com/actions/toolkit/blob/maste
 
 ### Helper
 
-#### Generate nostr key pair
+#### Generate Nostr key pair
 ```
 > npm run generate-key
 Private key: 3ddd5602285899a946114506157c7997e5444528f3003f6134712147db19b678
@@ -107,7 +107,7 @@ Public key: 17d188313f254d320183aab21c4ec7354ebad1e2435799431962e6118a56eff4
 ```
 
 #### Publish example event
-Send an example event via nostr (dry-run by default)
+Send an example event via Nostr (dry-run by default)
 
 ```
 > npm run example
@@ -127,5 +127,5 @@ dry-run enabled - connection to relays will be established, but no event will be
 ```
 
 ## Resources
-- nostr (GitHub): https://github.com/nostr-protocol/nostr
+- Nostr (GitHub): https://github.com/nostr-protocol/nostr
 - JavaScript GitHub Action (GitHub): https://github.com/actions/javascript-action
