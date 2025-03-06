@@ -32,5 +32,5 @@ jobs:
       with:
         dry: ${{ env.NOSTR_DRY }}
         key: ${{ env.NOSTR_KEY }}
-        relay: ${{ env.NOSTR_RELAY }}
+        relays: ${{ env.NOSTR_RELAY }}
         content: ${{ env.NOSTR_CONTENT }}

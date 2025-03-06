@@ -39,7 +39,7 @@ jobs:
         with:
           dry: ${{ github.event.inputs.dry }}
           key: ${{ github.event.inputs.key }}
-          relay: ${{ github.event.inputs.relay }}
+          relays: ${{ github.event.inputs.relay }}
           content: ${{ github.event.inputs.content }}
           event_template: |
             {
