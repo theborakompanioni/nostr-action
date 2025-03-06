@@ -13,7 +13,7 @@ Use this action to send events with [Nostr](https://github.com/nostr-protocol/no
 uses: theborakompanioni/nostr-action@v1
 with:
   key: ${{ secrets.NOSTR_KEY }}
-  relay: wss://nostr-dev.wellorder.net
+  relays: wss://nostr-dev.wellorder.net, wss://relay.primal.net
   content: Hello World
 ```
 
@@ -51,7 +51,7 @@ Example debug output:
 uses: theborakompanioni/nostr-action@v1
 with:
   key: ${{ secrets.NOSTR_KEY }}
-  relay: wss://nostr-dev.wellorder.net
+  relays: wss://nostr-dev.wellorder.net, wss://relay.primal.net
   content: Hello World
   event_template: |
     {
@@ -90,9 +90,9 @@ Packaging the action will create a packaged action in the dist folder.
 
 ### Create a new release
 ```bash
-git tag --annotate --sign v1.x.x --message "Release v1.x.x"
+git tag --annotate --sign v1.x.x --message "v1.x.x"
 git tag --force --annotate --sign v1 --message "Update v1 tag"
-git push --tags
+git push --tags --force
 ``` 
 
 See the [versioning documentation](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md).

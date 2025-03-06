@@ -11,7 +11,7 @@ const DEFAULT_ENV = {
   GITHUB_STEP_SUMMARY: './github_step_summary.itest.local',
   INPUT_DRY: true,
   INPUT_KEY: TEST_KEY_HEX,
-  INPUT_RELAY: 'wss://nostr-dev.wellorder.net',
+  INPUT_RELAYS: 'wss://nostr-dev.wellorder.net, wss://relay.primal.net',
   INPUT_CONTENT: 'test',
   INPUT_EVENT_TEMPLATE: JSON.stringify({
     tags: [
