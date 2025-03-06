@@ -9,8 +9,8 @@ const TEST_KEY_NSEC = 'nsec18hw4vq3gtzv6j3s3g5rp2lrejlj5g3fg7vqr7cf5wys50kcekeuq
 const DEFAULT_ENV = {
   INPUT_DRY: false,
   INPUT_KEY: TEST_KEY_HEX,
-  INPUT_RELAY: 'wss://localhost, wss://localhost:8080',
-  INPUT_RELAYS: '',
+  INPUT_RELAY: '',
+  INPUT_RELAYS: 'wss://localhost, wss://localhost:8080',
   INPUT_CONTENT: 'test',
   INPUT_EVENT_TEMPLATE: JSON.stringify({
     tags: [
