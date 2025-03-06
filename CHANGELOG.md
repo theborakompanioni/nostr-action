@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.0] - 2025-03-06
+
 ### Added
 - Populate action summary with event info
 - Support nip19 encoding for key input param (nsec)
@@ -27,6 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Initial release
 
-[Unreleased]: https://github.com/theborakompanioni/nostr-action/compare/v1.1.0...HEAD
+[Unreleased]: https://github.com/theborakompanioni/nostr-action/compare/v1.2.0...HEAD
+[1.2.0]: https://github.com/theborakompanioni/nostr-action/releases/tag/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/theborakompanioni/nostr-action/releases/tag/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/theborakompanioni/nostr-action/releases/tag/v1.0.0
